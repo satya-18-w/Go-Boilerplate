@@ -1,0 +1,19 @@
+{
+  "name": "go-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for production ready application in GO.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "packageManager": "bun@1.2.23",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  }
+}
