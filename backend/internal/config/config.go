@@ -20,10 +20,17 @@ type Config struct {
 	Auth          AuthConfig           `koanf:"auth" validate:"required"`
 	Redis         RedisConfig          `koanf:"redis" validate:"required"`
 	Observability *ObservabilityConfig `koanf:"observability"`
+	Integration IntegrationConfig `koanf:"integration" validate:"required"`
 }
 
 type Primary struct {
 	Env string `koanf:"env" validate:"required"`
+}
+
+
+
+type IntegrationConfig struct{
+	ResendAPIKey string `koanf:"resend_api_key" validate:"required"`
 }
 
 type ServerConfig struct {

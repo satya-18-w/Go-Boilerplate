@@ -13,15 +13,12 @@ import (
 	"github.com/satya-18-w/go-boilerplate/internal/config"
 )
 
-
 // Logger for new relic
 type LoggerService struct {
 	nrApp *newrelic.Application
 }
 
-
-
-func NewLoggerWithService(cfg *config.ObservabilityConfig) *LoggerService {
+func NewLoggerService(cfg *config.ObservabilityConfig) *LoggerService {
 	service := &LoggerService{}
 	if cfg.NewRelic.LicenseKey == "" {
 		fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
@@ -59,7 +56,6 @@ func (l *LoggerService) GetApplication() *newrelic.Application {
 	return l.nrApp
 }
 
-
 func NewLogger(level string, isProd bool) zerolog.Logger {
 	return NewLoggerWithService(&config.ObservabilityConfig{
 		Logging: config.LoggingConfig{
@@ -74,8 +70,7 @@ func NewLogger(level string, isProd bool) zerolog.Logger {
 	})
 }
 
-
-func NewLoggerWithConfig(cfg *config.ObservabilityConfig) zerolog.Logger {
+func NewLoggerWithService(cfg *config.ObservabilityConfig, loggerservice *LoggerService) zerolog.Logger {
 	var logLevel zerolog.Level
 	level := cfg.GetLogLevel()
 
@@ -105,8 +100,8 @@ func NewLoggerWithConfig(cfg *config.ObservabilityConfig) zerolog.Logger {
 		baseWriter = os.Stdout
 
 		// Wrap with New Relic zerologWriter for log forwarding in production
-		if loggerService != nil && loggerService.nrApp != nil {
-			nrWriter := zerolog.Writer.New(baseWriter, loggerService.nrApp)
+		if loggerservice != nil && loggerservice.nrApp != nil {
+			nrWriter := zerologWriter.New(baseWriter, loggerservice.nrApp)
 			writer = nrWriter
 		} else {
 			writer = baseWriter
@@ -116,6 +111,7 @@ func NewLoggerWithConfig(cfg *config.ObservabilityConfig) zerolog.Logger {
 		consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: "2006-01-02 15:04:05"}
 		writer = consoleWriter
 	}
+	
 
 	// Note: New Relic log forwarding is now handled automatically by zerologWriter integration
 
@@ -182,8 +178,8 @@ func NewPgxLogger(level zerolog.Level) zerolog.Logger {
 		Logger()
 }
 
-func GetPgxTraceLogLevel(level zerolog.Level) int{
-	switch level{
+func GetPgxTraceLogLevel(level zerolog.Level) int {
+	switch level {
 	case zerolog.DebugLevel:
 		return 6
 	case zerolog.InfoLevel:
