@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	zerologWriter "github.com/newrelic/go-agent/v3/integrations/logcontext-v2/zerologWriter"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
@@ -20,8 +21,8 @@ type LoggerService struct {
 
 func NewLoggerService(cfg *config.ObservabilityConfig) *LoggerService {
 	service := &LoggerService{}
+	fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
 	if cfg.NewRelic.LicenseKey == "" {
-		fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
 		return service
 	}
 	var configOptions []newrelic.ConfigOption
@@ -56,19 +57,19 @@ func (l *LoggerService) GetApplication() *newrelic.Application {
 	return l.nrApp
 }
 
-func NewLogger(level string, isProd bool) zerolog.Logger {
-	return NewLoggerWithService(&config.ObservabilityConfig{
-		Logging: config.LoggingConfig{
-			Level: level,
-		},
-		Environment: func() string {
-			if isProd {
-				return "production"
-			}
-			return "development"
-		}(),
-	})
-}
+// func NewLogger(level string, isProd bool) zerolog.Logger {
+// 	return NewLoggerWithService(&config.ObservabilityConfig{
+// 		Logging: config.LoggingConfig{
+// 			Level: level,
+// 		},
+// 		Environment: func() string {
+// 			if isProd {
+// 				return "production"
+// 			}
+// 			return "development"
+// 		}(),
+// 	})
+// }
 
 func NewLoggerWithService(cfg *config.ObservabilityConfig, loggerservice *LoggerService) zerolog.Logger {
 	var logLevel zerolog.Level
@@ -111,7 +112,6 @@ func NewLoggerWithService(cfg *config.ObservabilityConfig, loggerservice *Logger
 		consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: "2006-01-02 15:04:05"}
 		writer = consoleWriter
 	}
-	
 
 	// Note: New Relic log forwarding is now handled automatically by zerologWriter integration
 

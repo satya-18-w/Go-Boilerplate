@@ -12,7 +12,7 @@ package middleware
 //    * Centralized Error Handling: Provides a central place to handle HTTP errors.
 
 import (
-	"errors"
+	// "errors"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
