@@ -16,3 +16,6 @@ func NewAuthService(s *server.Server) *AuthService{
 		server: s,
 	}
 }
+
+
+

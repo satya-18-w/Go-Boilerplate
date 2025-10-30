@@ -16,3 +16,4 @@ func NewHandlers(s *server.Server,services *service.Services) *Handlers{
 		OpenAPI: NewOpenAPIHandler(s),
 	}
 }
+

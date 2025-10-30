@@ -65,15 +65,15 @@ func (c *ObservabilityConfig) Validate() error {
 
 	//Validate log level
 	validLevels := map[string]bool{
-		"debug":true,
-		"info":true,
-		"warn":true,
-		"error":true,
+		"debug": true,
+		"info":  true,
+		"warn":  true,
+		"error": true,
 	}
-	if validLevels[c.Logging.Level]{
-		return fmt.Errorf("Invalid log level: %s", c.Logging.Level)
+	if !validLevels[c.Logging.Level] {
+		return fmt.Errorf("invalid log level: %s", c.Logging.Level)
 	}
-	if c.Logging.SlowQueryThreshold < 0{
+	if c.Logging.SlowQueryThreshold < 0 {
 		return fmt.Errorf("logging slow_query_thresold must be non-negative")
 	}
 	return nil

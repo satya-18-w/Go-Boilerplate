@@ -43,7 +43,7 @@ func (h *HealthHandler) CheckHealth(c echo.Context) error {
 		checks["database"] = map[string]interface{}{
 			"status":        "unhealthy",
 			"response_time": time.Since(dbStart).String(),
-			"error":         err.Error,
+			"error":         err.Error(),
 		}
 		isHealthy = false
 		logger.Error().Err(err).Dur("response_time", time.Since(dbStart)).Msg("database health check failed")
@@ -69,18 +69,19 @@ func (h *HealthHandler) CheckHealth(c echo.Context) error {
 	// Database connection metrics are automitically captured by New Relic nrpgx5 integraion
 	// check redis cache connectivity
 	if h.server.Redis != nil {
-		ctx, calcel := context.WithTimeout(context.Background(), 5*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		redisStart := time.Now()
-		if err := h.server.Redis.Ping(ctx); err != nil {
+		cmd := h.server.Redis.Ping(ctx)
+		if cmd.Err() != nil {
 			checks["redis"] = map[string]interface{}{
 				"status":        "unhealthy",
 				"response_time": time.Since(redisStart).String(),
-				"error":         err.Error(),
+				"error":         cmd.Err().Error(),
 			}
 
-			logger.Error().Err(err).Dur("response_time", time.Since(redisStart)).Msg("Redis health check Failed")
+			logger.Error().Err(cmd.Err()).Dur("response_time", time.Since(redisStart)).Msg("Redis health check Failed")
 			if h.server.LoggerService != nil && h.server.LoggerService.GetApplication() != nil {
 				h.server.LoggerService.GetApplication().RecordCustomEvent(
 					"HealthCheckError", map[string]interface{}{
@@ -88,7 +89,7 @@ func (h *HealthHandler) CheckHealth(c echo.Context) error {
 						"operation":        "HealthCheck",
 						"error_type":       "redis_unhealthy",
 						"response_time_ms": time.Since(redisStart).Milliseconds(),
-						"error_message":    err.Error(),
+						"error_message":    cmd.Err().Error(),
 					})
 			}
 
@@ -116,7 +117,7 @@ func (h *HealthHandler) CheckHealth(c echo.Context) error {
 				},
 			)
 		}
-		return c.json(http.StatusServiceUnavailable, response)
+		return c.JSON(http.StatusServiceUnavailable, response)
 
 	}
 	logger.Info().Dur("Total_HealthCheck_duration", time.Since(start)).Msg("Health check passed")
