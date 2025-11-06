@@ -11,7 +11,7 @@ import (
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
-	"github.com/satya-18-w/go-boilerplate/internal/config"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
 )
 
 // Logger for new relic
@@ -21,8 +21,9 @@ type LoggerService struct {
 
 func NewLoggerService(cfg *config.ObservabilityConfig) *LoggerService {
 	service := &LoggerService{}
-	fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
+	
 	if cfg.NewRelic.LicenseKey == "" {
+		fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
 		return service
 	}
 	var configOptions []newrelic.ConfigOption
@@ -38,7 +39,7 @@ func NewLoggerService(cfg *config.ObservabilityConfig) *LoggerService {
 
 	app, err := newrelic.NewApplication(configOptions...)
 	if err != nil {
-		fmt.Printf("Could not initialize new relic : %v", err)
+		fmt.Printf("Could not initialize new relic : %v \n", err)
 		return service
 	}
 	service.nrApp = app

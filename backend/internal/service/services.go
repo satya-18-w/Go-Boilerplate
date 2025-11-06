@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/satya-18-w/go-boilerplate/internal/lib/job"
-	"github.com/satya-18-w/go-boilerplate/internal/repository"
-	"github.com/satya-18-w/go-boilerplate/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/lib/job"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/repository"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 )
 
 type Services struct {

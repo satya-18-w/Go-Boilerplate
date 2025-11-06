@@ -1,7 +1,11 @@
 version: '3'
 
 vars:
-  BOILERPLATE_DB_DSN: '{{.BOILERPLATE_DB_DSN | default ""}}'
+  TODO_TASKER_DB_DSN: '{{.TODO_TASKER_DB_DSN | default ""}}'
+
+# Note: Run tasks from the backend directory, or use 'task -f backend/Taskfile.yaml <task>'
+# On Windows/cmd: set TODO_TASKER_DB_DSN=<dsn> && task migrations:new name=<name>
+# On Windows/PowerShell: $env:TODO_TASKER_DB_DSN = '<dsn>'; task migrations:new name=<name>
 
 tasks:
   help:
@@ -19,9 +23,9 @@ tasks:
     internal: true
 
   run:
-    desc: run the cmd/go-boilerplate application
+    desc: run the cmd/go-TODO_TASKER application
     cmds:
-    - go run ./cmd/go-boilerplate
+    - go run ./cmd/go-TODO_TASKER
 
   migrations:new:
     desc: create a new database migration
@@ -42,7 +46,7 @@ tasks:
     deps: [ confirm ]
     cmds:
     - echo 'Running up migrations...'
-    - tern migrate -m ./internal/database/migrations --conn-string {{.BOILERPLATE_DB_DSN}}
+    - tern migrate -m ./internal/database/migrations --conn-string {{.TODO_TASKER_DB_DSN}}
 
   tidy:
     desc: format all .go files, and tidy and vendor module dependencies

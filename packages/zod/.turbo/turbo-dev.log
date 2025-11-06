@@ -1,13 +1,15 @@
 [?9001h[?1004h[?25l[2J[m[35m[2m[H$[m[1m[2m[1Ctsc && (concurrently "tsc -w" "tsc-alias -w")
-]0;C:\WINDOWS\system32\cmd.exe[?25h[22m[0] [2J[3J[?25l[H[K
+]0;C:\WINDOWS\system32\cmd.exe[?25h[22m[0] [2J[3J[?25l[H10:41:58 am - Starting compilation in watch mode...[K
+[0][K
 [K
 [K
 [K
 [K
 [K
 [K
-[K[H[?25h7:43:39 pm - Starting compilation in watch mode...
-[0] 
+[K
+[K
+[K
+[K[3;1H[?25h[0] 
+[0] 10:41:59 am - Found 0 errors. Watching for file changes.
 [1] tsc-alias info: [Watching for file changes...]
-[0] 
-[0] 7:43:41 pm - Found 0 errors. Watching for file changes.

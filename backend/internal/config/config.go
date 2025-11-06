@@ -23,6 +23,7 @@ type Config struct {
 	Integration IntegrationConfig `koanf:"integration" validate:"required"`
 }
 
+
 type Primary struct {
 	Env string `koanf:"env" validate:"required"`
 }
@@ -65,8 +66,8 @@ type AuthConfig struct {
 func LoadConfig() (*Config, error) {
 	logger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
 	k := koanf.New(".")
-	err := k.Load(env.Provider("BOILERPLATE_", ".", func(s string) string {
-		return strings.ToLower(strings.TrimPrefix(s, "BOILERPLATE_"))
+	err := k.Load(env.Provider("TODO_TASKER_", ".", func(s string) string {
+		return strings.ToLower(strings.TrimPrefix(s, "TODO_TASKER_"))
 	}), nil)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("Could not load initial env variables")
@@ -85,7 +86,7 @@ func LoadConfig() (*Config, error) {
 	if mainconfig.Observability == nil {
 		mainconfig.Observability = DefaultObservabilityConfig()
 	}
-	mainconfig.Observability.ServiceName = "boilerplate"
+	mainconfig.Observability.ServiceName = "TODO_TASKER"
 	mainconfig.Observability.Environment = mainconfig.Primary.Env
 
 	if err := mainconfig.Observability.Validate(); err != nil {

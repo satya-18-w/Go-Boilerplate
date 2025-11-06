@@ -14,8 +14,8 @@ import (
 	"github.com/newrelic/go-agent/v3/integrations/nrpgx5"
 	pgxzerolog "github.com/jackc/pgx-zerolog"
 	"github.com/rs/zerolog"
-	"github.com/satya-18-w/go-boilerplate/internal/config"
-	loggerConfig "github.com/satya-18-w/go-boilerplate/internal/logger"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
+	loggerConfig "github.com/satya-18-w/go-TODO_TASKER/internal/logger"
 )
 
 // MultiTracer allows chaining multiple tracers

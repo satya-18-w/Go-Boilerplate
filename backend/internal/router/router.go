@@ -5,10 +5,10 @@ import (
 
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
-	"github.com/satya-18-w/go-boilerplate/internal/handler"
-	"github.com/satya-18-w/go-boilerplate/internal/middleware"
-	"github.com/satya-18-w/go-boilerplate/internal/server"
-	"github.com/satya-18-w/go-boilerplate/internal/service"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/handler"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/middleware"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/service"
 	"golang.org/x/time/rate"
 )
 

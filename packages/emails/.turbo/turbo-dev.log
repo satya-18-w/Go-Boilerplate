@@ -1,11 +1,10 @@
 [?9001h[?1004h[?25l[2J[m[35m[2m[H$[m[1m[2m[1Cemail dev --dir ./src/templates -p 3001
 ]0;C:\WINDOWS\system32\cmd.exe[?25h[22m[92m    React Email 4.0.2
 [?25l[m    Running preview at:          http://localhost:3001[5;1H  [36m⠋ [mGetting react-email preview server ready...
-[K[127C[5;1H  [36m⠙ [mGetting react-email preview server ready...[K[80C
-[K[127C[5;1H  [36m⠹ [mGetting react-email preview server ready...[K[80C
-[K[127C[5;1H  [32m✔ [mReady in 0.5s[K[7;1H[?25h[?25l  [36m⠋ [mRendering email template welcome.tsx
-[K[127C[7;1H  [36m⠙ [mRendering email template welcome.tsx[K[87C
-[K[127C[7;1H  [36m⠹ [mRendering email template welcome.tsx[K[87C
-[K[127C[7;1H  [36m⠸ [mRendering email template welcome.tsx[K[87C
-[K[127C[7;1H  [32m✔ [mSuccessfully rendered welcome.tsx in [33m698ms[K[m
+[K[150C[5;1H  [36m⠙ [mGetting react-email preview server ready...[K[103C
+[K[150C[5;1H  [36m⠹ [mGetting react-email preview server ready...[K[103C
+[K[150C[5;1H  [32m✔ [mReady in 0.7s[K[7;1H[?25h[?25l  [36m⠋ [mRendering email template welcome.tsx
+[K[150C[7;1H  [36m⠙ [mRendering email template welcome.tsx[K[110C
+[K[150C[7;1H  [36m⠹ [mRendering email template welcome.tsx[K[110C
+[K[150C[7;1H  [32m✔ [mSuccessfully rendered welcome.tsx in [33m926ms[K[m
 [K[?25h

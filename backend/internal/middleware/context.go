@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/rs/zerolog"
-	"github.com/satya-18-w/go-boilerplate/internal/logger"
-	"github.com/satya-18-w/go-boilerplate/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/logger"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 	// "golang.org/x/tools/go/analysis/passes/nilfunc"
 )
 

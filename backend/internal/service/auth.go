@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/clerk/clerk-sdk-go/v2"
-	"github.com/satya-18-w/go-boilerplate/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 )
 
 type AuthService struct {

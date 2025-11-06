@@ -8,14 +8,14 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/satya-18-w/go-boilerplate/internal/config"
-	"github.com/satya-18-w/go-boilerplate/internal/database"
-	"github.com/satya-18-w/go-boilerplate/internal/handler"
-	"github.com/satya-18-w/go-boilerplate/internal/logger"
-	"github.com/satya-18-w/go-boilerplate/internal/repository"
-	"github.com/satya-18-w/go-boilerplate/internal/router"
-	"github.com/satya-18-w/go-boilerplate/internal/server"
-	"github.com/satya-18-w/go-boilerplate/internal/service"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/database"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/handler"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/logger"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/repository"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/router"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/service"
 )
 
 const DefaultContextTimeout = 30

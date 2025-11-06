@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/satya-18-w/go-boilerplate/internal/server"
-	"github.com/satya-18-w/go-boilerplate/internal/service"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/service"
 )
 
 type Handlers struct {

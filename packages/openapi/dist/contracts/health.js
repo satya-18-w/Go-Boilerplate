@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
-import { ZHealthResponse } from "@boilerplate/zod";
+import { ZHealthResponse } from "@TODO_TASKER/zod";
 const c = initContract();
 export const healthContract = c.router({
     getHealth: {

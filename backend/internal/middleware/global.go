@@ -7,10 +7,10 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/satya-18-w/go-boilerplate/internal/errs"
-	"github.com/satya-18-w/go-boilerplate/internal/sqlerr"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/errs"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/sqlerr"
 
-	"github.com/satya-18-w/go-boilerplate/internal/server"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 )
 
 type GlobalMiddlewares struct {

@@ -1,4 +1,4 @@
-module github.com/satya-18-w/go-boilerplate
+module github.com/satya-18-w/go-TODO_TASKER
 
 go 1.25.0
 
