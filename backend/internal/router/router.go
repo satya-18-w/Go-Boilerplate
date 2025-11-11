@@ -7,6 +7,7 @@ import (
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/handler"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/middleware"
+	v1 "github.com/satya-18-w/go-TODO_TASKER/internal/router/v1"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/service"
 	"golang.org/x/time/rate"
@@ -53,6 +54,8 @@ func NewRouter(s *server.Server, h *handler.Handlers, services *service.Services
 	registerSystemRouter(router, h)
 
 	// Register Versioning of the APi
-	router.Group("/api/v1")
+	v1Router := router.Group("/api/v1")
+	v1.RegisterV1Routes(v1Router, h,  middlewares)
+
 	return router
 }

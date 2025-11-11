@@ -7,7 +7,6 @@ import (
 	"os"
 	"time"
 
-	zerologWriter "github.com/newrelic/go-agent/v3/integrations/logcontext-v2/zerologWriter"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
@@ -21,7 +20,7 @@ type LoggerService struct {
 
 func NewLoggerService(cfg *config.ObservabilityConfig) *LoggerService {
 	service := &LoggerService{}
-	
+
 	if cfg.NewRelic.LicenseKey == "" {
 		fmt.Println("New Relic Liense key not Provided , skipping initialization. ")
 		return service
@@ -98,16 +97,12 @@ func NewLoggerWithService(cfg *config.ObservabilityConfig, loggerservice *Logger
 	// Setup base writer
 	var baseWriter io.Writer
 	if cfg.IsProduction() && cfg.Logging.Format == "json" {
-		// In production, write to stdout
+		// In production, write to stdout in JSON format
 		baseWriter = os.Stdout
+		writer = baseWriter
 
-		// Wrap with New Relic zerologWriter for log forwarding in production
-		if loggerservice != nil && loggerservice.nrApp != nil {
-			nrWriter := zerologWriter.New(baseWriter, loggerservice.nrApp)
-			writer = nrWriter
-		} else {
-			writer = baseWriter
-		}
+		// Note: For New Relic log forwarding in production, configure log forwarding
+		// at the infrastructure level (e.g., using New Relic Infrastructure agent or Fluent Bit)
 	} else {
 		// Development mode - use console writer
 		consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: "2006-01-02 15:04:05"}

@@ -1,6 +1,7 @@
 package job
 
 import (
+	"context"
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
@@ -10,6 +11,11 @@ type JobService struct {
 	Client *asynq.Client
 	Server *asynq.Server
 	logger *zerolog.Logger
+	authService AuthServiceInterface
+}
+
+type AuthServiceInterface interface {
+	GetUserEmail(ctx context.Context, userID string) (string, error)
 }
 
 func NewJobService(logger *zerolog.Logger, cfg *config.Config) *JobService {
@@ -35,6 +41,10 @@ func NewJobService(logger *zerolog.Logger, cfg *config.Config) *JobService {
 		Server: server,
 		logger: logger,
 	}
+}
+
+func (j *JobService) SetAuthService(authService AuthServiceInterface) {
+	j.authService = authService
 }
 
 func (j *JobService) Start() error {

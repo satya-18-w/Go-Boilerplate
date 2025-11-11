@@ -234,3 +234,9 @@ Log levels:
 ## License
 
 See the parent project's LICENSE file.
+
+
+
+
+
+After creating the jwt template and user in clerk paste the impercite user dev console : await window.Clerk.session.getToken({ template: "testing-template" });

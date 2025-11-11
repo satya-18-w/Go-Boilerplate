@@ -47,3 +47,12 @@ func (j *JobService) handleWelcomeEmailTask(ctx context.Context, t *asynq.Task) 
 		Msg("Successfully sent welcome email")
 	return nil
 }
+
+
+// func ( j *JobService) handleReminderEmailTask(ctx context.Context, t *asynq.Task) error{
+
+// 	var p ReminderEmailTask
+
+
+
+// }

@@ -21,8 +21,16 @@ type Config struct {
 	Redis         RedisConfig          `koanf:"redis" validate:"required"`
 	Observability *ObservabilityConfig `koanf:"observability"`
 	Integration IntegrationConfig `koanf:"integration" validate:"required"`
-}
+    AWS    AWSConfig `koanf:"aws" validate:"required"`
 
+
+}
+type AWSConfig struct{
+	Region string `koanf:"region" validate:"required"`
+	AccessKeyID string `koanf:"access_key_id" validate:"required"`
+	SecretAccessKey string `koanf:"secret_access_key" validate:"required"`
+	UploadBucket string `koanf:"upload_bucket" validate:"required"`
+}
 
 type Primary struct {
 	Env string `koanf:"env" validate:"required"`

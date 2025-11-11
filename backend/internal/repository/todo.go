@@ -221,7 +221,7 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 		AND child.user_id=@user_id
 		LEFT JOIN todo_comments com ON com.todo_id=t.id
 		AND com.user_id=@user_id
-		LEFT JOIN todo_attachments att ON att.todo_id=t.id
+		
 `
 
 	args := pgx.NamedArgs{
@@ -289,6 +289,7 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 	var total int
 
 	err := r.server.DB.Pool.QueryRow(ctx, countstmt, args).Scan(&total)
+	// fmt.Printf("UserID: %s",user)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to get total count of todos for user_id=%s: %w", userId, err)
 	}
@@ -804,3 +805,5 @@ func (r *TodoRepository) GetOverdueTodosForUser(ctx context.Context, userID stri
 
 	return overdueTodos, nil
 }
+
+
