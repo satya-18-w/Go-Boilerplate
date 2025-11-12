@@ -2,16 +2,19 @@ package job
 
 import (
 	"context"
+
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/lib/email"
 )
 
 type JobService struct {
-	Client *asynq.Client
-	Server *asynq.Server
-	logger *zerolog.Logger
+	Client      *asynq.Client
+	Server      *asynq.Server
+	logger      *zerolog.Logger
 	authService AuthServiceInterface
+	emailClient *email.Client
 }
 
 type AuthServiceInterface interface {
@@ -52,6 +55,8 @@ func (j *JobService) Start() error {
 	mux := asynq.NewServeMux()
 
 	mux.HandleFunc(TaskWelcome, j.handleWelcomeEmailTask)
+	mux.HandleFunc(TaskReminderEmail, j.handleReminderEmailTask)
+	mux.HandleFunc(TaskWeeklyReportEmail,j.handleWeeklyReportEmailTask)
 	j.logger.Info().Msg("Starting Backgrond Job Server")
 	if err := j.Server.Start(mux); err != nil {
 		return err

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/rs/zerolog"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/rs/zerolog"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/errs"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/sqlerr"
 
@@ -156,17 +156,16 @@ func (g *GlobalMiddlewares) GlobalErrorHandler(err error, c echo.Context) {
 	// Log the original error to help with debugging
 	// Use Enhanced logger from context already includes request_id,method,path, ip, user context, and trace context
 	logger := *GetLogger(c)
-	logger.Error().Stack().Err(originalErr).Int("status",status).Str("error_code",code).Msg(message)
-	if !c.Response().Committed{
-		_=c.JSON(status,errs.HTTPError{
-			Code: code,
-			Message: message,
-			Status: status,
+	logger.Error().Stack().Err(originalErr).Int("status", status).Str("error_code", code).Msg(message)
+	if !c.Response().Committed {
+		_ = c.JSON(status, errs.HTTPError{
+			Code:     code,
+			Message:  message,
+			Status:   status,
 			Override: httpErr != nil && httpErr.Override,
-			Errors: fieldErrors,
-			Action: action,
+			Errors:   fieldErrors,
+			Action:   action,
 		})
 	}
-
 
 }

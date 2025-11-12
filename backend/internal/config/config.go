@@ -20,25 +20,21 @@ type Config struct {
 	Auth          AuthConfig           `koanf:"auth" validate:"required"`
 	Redis         RedisConfig          `koanf:"redis" validate:"required"`
 	Observability *ObservabilityConfig `koanf:"observability"`
-	Integration IntegrationConfig `koanf:"integration" validate:"required"`
-    AWS    AWSConfig `koanf:"aws" validate:"required"`
-
-
+	Integration   IntegrationConfig    `koanf:"integration" validate:"required"`
+	AWS           AWSConfig            `koanf:"aws" validate:"required"`
 }
-type AWSConfig struct{
-	Region string `koanf:"region" validate:"required"`
-	AccessKeyID string `koanf:"access_key_id" validate:"required"`
+type AWSConfig struct {
+	Region          string `koanf:"region" validate:"required"`
+	AccessKeyID     string `koanf:"access_key_id" validate:"required"`
 	SecretAccessKey string `koanf:"secret_access_key" validate:"required"`
-	UploadBucket string `koanf:"upload_bucket" validate:"required"`
+	UploadBucket    string `koanf:"upload_bucket" validate:"required"`
 }
 
 type Primary struct {
 	Env string `koanf:"env" validate:"required"`
 }
 
-
-
-type IntegrationConfig struct{
+type IntegrationConfig struct {
 	ResendAPIKey string `koanf:"resend_api_key" validate:"required"`
 }
 
@@ -65,6 +61,7 @@ type DatabaseConfig struct {
 
 type RedisConfig struct {
 	Address string `koanf:"address" validate:"required"`
+	Password string `koanf:"password"`
 }
 
 type AuthConfig struct {

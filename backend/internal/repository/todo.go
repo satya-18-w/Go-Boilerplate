@@ -28,12 +28,30 @@ func NewTodoRepository(s *server.Server) *TodoRepository {
 func (r *TodoRepository) CreateTodo(ctx context.Context, userID string, payload *todo.CreateTodoPayload) (*todo.Todo, error) {
 
 	stmt := `
-	INSERT INTO todos(user_id,title,description,priority
-	,status,due_date,parent_todo_id,category_id,metadata)
-	 VALUES 
-	 (@user_id,@title,@description,@priority,
-	 @due_date,@parent_todo_id,@category_id,@metadata) RETURNING *
-
+		INSERT INTO
+			todos (
+				user_id,
+				title,
+				description,
+				priority,
+				due_date,
+				parent_todo_id,
+				category_id,
+				metadata
+			)
+		VALUES
+			(
+				@user_id,
+				@title,
+				@description,
+				@priority,
+				@due_date,
+				@parent_todo_id,
+				@category_id,
+				@metadata
+			)
+		RETURNING
+		*
 	`
 
 	priority := todo.PriorityMedium
@@ -44,6 +62,7 @@ func (r *TodoRepository) CreateTodo(ctx context.Context, userID string, payload 
 		"user_id":        userID,
 		"title":          payload.Title,
 		"priority":       priority,
+		"status":         "draft",
 		"due_date":       payload.DueDate,
 		"description":    payload.Description,
 		"parent_todo_id": payload.ParentTodoID,
@@ -69,62 +88,63 @@ func (r *TodoRepository) CreateTodo(ctx context.Context, userID string, payload 
 
 func (r *TodoRepository) GetTodoByID(ctx context.Context, userID string, todoID uuid.UUID) (*todo.PopulatedTodo, error) {
 	stmt := `
-		SELECT 
-		 t.*,
-		 CASE 
-		   WHEN c.id IS NOT NULL THEN to_jsonb(camel (c))
-		   ELSE NULL
-
-		 END AS category,
+	SELECT
+		t.*,
+		CASE
+			WHEN c.id IS NOT NULL THEN to_jsonb(camel (c))
+			ELSE NULL
+		END AS category,
+		COALESCE(
+			jsonb_agg(
+				to_jsonb(camel (child))
+				ORDER BY
+					child.sort_order ASC,
+					child.created_at ASC
+			) FILTER (
+				WHERE
+					child.id IS NOT NULL
+			),
+			'[]'::JSONB
+		) AS children,
+		COALESCE(
+			jsonb_agg(
+				to_jsonb(camel (com))
+				ORDER BY
+					com.created_at ASC
+			) FILTER (
+				WHERE
+					com.id IS NOT NULL
+			),
+			'[]'::JSONB
+		) AS comments,
 		 COALESCE(
-		   jsonb_agg(
-		   to_jsonb(camel (child))
-		   ORDER BY 
-		      child.sort_order ASC,
-			  child.created_at ASC
-			  ) FILTER (
-			   WHERE child.id IS NOT NULL
-			   ),
-			   '[]'::JSONB
-) AS children,
-	COALESCE(
-	jsonb_agg(
-	to_jsonb(camel (com))
-	ORDER BY 
-	com.created_at ASC 
-	) FILTER (
-	 WHERE com.id IS NOT NULL),
-	 '[]'::JSONB) 
-	 AS comments,
-	 COALESCE(
-	 jsonb_agg(
-	 to_jsonb(camel (att))
-	 ORDER BY
-	 att.created_at DESC
-	 ) FILTER (
-	  WHERE att.id IS NOT NULL
-	  ),
-	  '[]'::JSONB
-	  ) AS attachments
-
-
-	  FROM todos t
-	  LEFT JOIN todo_categories c ON c.id=t.category_id
-	  AND c.user_id = @user_id
-	  LEFT JOIN todos child ON child.parent_id = t.id
-	  AND child.user_id =@user_id
-	  LEFT JOIN todo_comments com ON com.todo_id = t.id
-	  AND com.user_id = @user_id
-	//   LEFT JOIN todo_attachments att ON att.todo_id = t.id
-	  WHERE t.id=@id
-	  AND t.user_id=@user_id
-
-	  GROUP BY 
-	    t.id,
+				jsonb_agg(
+					to_jsonb(camel (att))
+					ORDER BY
+						att.created_at DESC
+				) FILTER (
+					WHERE
+						att.id IS NOT NULL
+				),
+				'[]'::JSONB
+			) AS attachments
+	FROM
+		todos t
+		LEFT JOIN todo_categories c ON c.id=t.category_id
+		AND c.user_id=@user_id
+		LEFT JOIN todos child ON child.parent_todo_id=t.id
+		AND child.user_id=@user_id
+		LEFT JOIN todo_comments com ON com.todo_id=t.id
+		AND com.user_id=@user_id
+		LEFT JOIN todo_attachments att ON att.todo_id=t.id
+	WHERE
+		t.id=@id
+		AND t.user_id=@user_id
+	GROUP BY
+		t.id,
 		c.id
+`
 
-	 
-	`
 	rows, err := r.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
 		"user_id": userID,
 		"id":      todoID,
@@ -221,9 +241,8 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 		AND child.user_id=@user_id
 		LEFT JOIN todo_comments com ON com.todo_id=t.id
 		AND com.user_id=@user_id
-		
+		LEFT JOIN todo_attachments att ON att.todo_id=t.id
 `
-
 	args := pgx.NamedArgs{
 		"user_id": userId,
 	}
@@ -595,7 +614,7 @@ func (r *TodoRepository) ArchivedTodos(ctx context.Context, todoIDs []uuid.UUID)
 	UPDATE todos
 	SET status = 'archived'
 	WHERE 
-	  id = ANY( todo_ids::uuid[])`
+	  id = ANY(@todo_ids::uuid[])`
 
 	result, err := r.server.DB.Pool.Exec(ctx, stmt, pgx.NamedArgs{
 		"todo_ids": todoIDs,
@@ -643,7 +662,7 @@ func (r *TodoRepository) GetWeeklyStatsForUsers(ctx context.Context, startDate, 
 			return []todo.UserWeeklyStats{}, nil
 		}
 
-		return nil, fmt.Errorf("failed to collect rows from table: todos : %w", &err)
+		return nil, fmt.Errorf("failed to collect rows from table: todos : %w", err)
 	}
 
 	return weeklytodo, nil
@@ -697,7 +716,7 @@ func (r *TodoRepository) GetCompletedTodosForUser(ctx context.Context, userID st
 			LEFT JOIN todo_categories c ON c.id = t.category_id AND c.user_id = @user_id
 			LEFT JOIN todos child ON child.parent_todo_id = t.id AND child.user_id = @user_id
 			LEFT JOIN todo_comments com ON com.todo_id = t.id AND com.user_id = @user_id
-			LEFT JOIN todo_attachments att ON att.todo_id=t.id
+			LEFT JOIN todo_attachments att ON att.todo_id=t.id AND att.user_id=@user_id
 		WHERE
 			t.user_id = @user_id
 			AND t.status = 'completed'
@@ -709,7 +728,6 @@ func (r *TodoRepository) GetCompletedTodosForUser(ctx context.Context, userID st
 			t.completed_at DESC
 		LIMIT 10
 	`
-
 	rows, err := r.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
 		"user_id":    userID,
 		"start_date": startDate,
@@ -776,7 +794,7 @@ func (r *TodoRepository) GetOverdueTodosForUser(ctx context.Context, userID stri
 			LEFT JOIN todo_categories c ON c.id = t.category_id AND c.user_id = @user_id
 			LEFT JOIN todos child ON child.parent_todo_id = t.id AND child.user_id = @user_id
 			LEFT JOIN todo_comments com ON com.todo_id = t.id AND com.user_id = @user_id
-			LEFT JOIN todo_attachments att ON att.todo_id=t.id
+			LEFT JOIN todo_attachments att ON att.todo_id=t.id AND att.user_id=@user_id
 		WHERE
 			t.user_id = @user_id
 			AND t.due_date < NOW()
@@ -806,4 +824,148 @@ func (r *TodoRepository) GetOverdueTodosForUser(ctx context.Context, userID stri
 	return overdueTodos, nil
 }
 
+func (r *TodoRepository) GetTodoAttachment(ctx context.Context, todoID uuid.UUID, attachmentID uuid.UUID) (*todo.Todo_Attachment, error) {
+	stmt := `
+	SELECT * FROM todo_attachments 
+	WHERE 
+	 todo_id = @todo_id
+	 AND id = @attachment_id`
 
+	rows, err := r.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
+		"todo_id":       todoID,
+		"attachment_id": attachmentID,
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get todo attachment: %w", err)
+	}
+
+	att, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[todo.Todo_Attachment])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			code := "ATTACHMENT_NOT_FOUND"
+			return nil, errs.NewBadRequestError("attachment not found", false, &code, nil, nil)
+		}
+		return nil, fmt.Errorf("Failed to collect row from table : Todo attachment: %w", err)
+	}
+
+	return &att, nil
+}
+
+func (r *TodoRepository) GetTodoAttachments(
+	ctx context.Context,
+	todoID uuid.UUID,
+) ([]todo.Todo_Attachment, error) {
+	stmt := `
+		SELECT
+			*
+		FROM
+			todo_attachments
+		WHERE
+			todo_id = @todo_id
+		ORDER BY
+			created_at DESC
+	`
+
+	rows, err := r.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
+		"todo_id": todoID,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to get todo attachments: %w", err)
+	}
+
+	attachments, err := pgx.CollectRows(rows, pgx.RowToStructByName[todo.Todo_Attachment])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return []todo.Todo_Attachment{}, nil
+		}
+		return nil, fmt.Errorf("failed to collect rows from table:todo_attachments: %w", err)
+	}
+
+	return attachments, nil
+}
+
+func (r *TodoRepository) DeleteTodoAttachment(
+	ctx context.Context,
+	todoID uuid.UUID,
+	attachmentID uuid.UUID,
+) error {
+	stmt := `
+		DELETE FROM todo_attachments
+		WHERE
+			todo_id = @todo_id
+			AND id = @attachment_id
+	`
+
+	result, err := r.server.DB.Pool.Exec(ctx, stmt, pgx.NamedArgs{
+		"todo_id":       todoID,
+		"attachment_id": attachmentID,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to delete todo attachment: %w", err)
+	}
+
+	if result.RowsAffected() == 0 {
+		code := "ATTACHMENT_NOT_FOUND"
+		return errs.NewNotFoundError("attachment not found", false, &code)
+	}
+
+	return nil
+}
+
+func (r *TodoRepository) UploadTodoAttachment(
+	ctx context.Context,
+	todoID uuid.UUID,
+	userID string,
+	s3Key string,
+	fileName string,
+	fileSize int64,
+	mimeType string) (*todo.Todo_Attachment, error) {
+
+	stmt := `
+		INSERT INTO
+			todo_attachments (
+				todo_id,
+				name,
+				uploaded_by,
+				download_key,
+				file_size,
+				mime_type
+			)
+		VALUES
+			(
+				@todo_id,
+				@name,
+				@uploaded_by,
+				@download_key,
+				@file_size,
+				@mime_type
+			)
+		 RETURNING *
+
+		 `
+
+	rows, err := r.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
+		"todo_id":      todoID,
+		"name":         fileName,
+		"uploaded_by":  userID,
+		"download_key": s3Key,
+		"file_size":    fileSize,
+		"mime_type":    mimeType,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create todo attachment for todo_id=%s: %w", todoID.String(), err)
+	}
+
+	attachment, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[todo.Todo_Attachment])
+	if err != nil {
+		return nil, fmt.Errorf("failed to collect row from table:todo_attachments: %w", err)
+	}
+
+	return &attachment, nil
+
+}
+
+
+
+// CRON Requirements

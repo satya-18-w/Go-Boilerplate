@@ -37,8 +37,8 @@ type Todo struct {
 	CompletedAt  *time.Time `json:"completedAt" db:"completed_at"`
 	ParentTodoID *uuid.UUID `json:"parentTodoId" db:"parent_todo_id"`
 	CategoryID   *uuid.UUID `json:"categoryId" db:"category_id"`
-	Metadata     *Metadata  `json:"metadata"db:"metadata"`
-	Sortorder    int        `json:'sortOrder"db:"sort_order"`
+	Metadata     *Metadata  `json:"metadata" db:"metadata"`
+	SortOrder    int        `json:"sortOrder" db:"sort_order"`
 }
 
 type Metadata struct {
@@ -50,9 +50,10 @@ type Metadata struct {
 
 type PopulatedTodo struct {
 	Todo
-	Category *category.Category `json:"category" db:"category"`
-	Children []Todo             `json:"children" db:"children"`
-	Comment  []comment.Comment  `json:"comments" db:"comments"`
+	Category    *category.Category `json:"category" db:"category"`
+	Children    []Todo             `json:"children" db:"children"`
+	Comment     []comment.Comment  `json:"comments" db:"comments"`
+	Attachments []Todo_Attachment  `json:"attachments" db:"attachments"`
 }
 
 type TodoStats struct {

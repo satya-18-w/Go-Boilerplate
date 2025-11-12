@@ -13,7 +13,6 @@ type Handlers struct {
 	Category *CategoryHandler
 }
 
-
 func NewHandlers(s *server.Server, services *service.Services) *Handlers {
 	return &Handlers{
 		Health:   NewHealthHandler(s),

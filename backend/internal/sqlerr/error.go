@@ -4,7 +4,6 @@ package sqlerr
 // The value Other is reported when an error does not map to any of the defined codes.
 type Code string
 
-
 const (
 	// Other is reported when an error does not map to any of the defined codes.
 	Other Code = "other"
@@ -39,8 +38,6 @@ const (
 	TooManyConnections Code = "too_many_connections"
 )
 
-
-
 // MapCode maps an underlying database error to a Code.
 func MapCode(code string) Code {
 	switch code {
@@ -64,7 +61,6 @@ func MapCode(code string) Code {
 		return Other
 	}
 }
-
 
 // Severity defines the severity of a database error.
 type Severity string
@@ -104,7 +100,6 @@ func MapSeverity(severity string) Severity {
 		return SeverityError
 	}
 }
-
 
 // Error represents an error reported by the database server.
 // It's not guaranteed all errors reported by database functions will be of this type;
@@ -152,4 +147,3 @@ func (pe *Error) Error() string {
 func (pe *Error) Unwrap() error {
 	return pe.driverErr
 }
-

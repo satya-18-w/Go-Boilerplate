@@ -25,13 +25,12 @@ func NewCommentService(s *server.Server, commentRepo *repository.CommentReposito
 
 func (c *CommentService) AddComment(ctx echo.Context, userID string, todoID uuid.UUID, payload *comment.AddCommentPayload) (*comment.Comment, error) {
 	logger := middleware.GetLogger(ctx)
-    //  Validate todo exists and belongs to user
-	_,err:=c.todoRepo.CheckTodoExists(ctx.Request().Context(),userID,todoID)
-	if err != nil{
+	//  Validate todo exists and belongs to user
+	_, err := c.todoRepo.CheckTodoExists(ctx.Request().Context(), userID, todoID)
+	if err != nil {
 		logger.Error().Err(err).Msg("Todo validation failed while adding comment.")
-		return nil,err
+		return nil, err
 	}
-
 
 	commentItem, err := c.commentRepo.AddComment(ctx.Request().Context(), userID, todoID, payload)
 	if err != nil {
@@ -40,18 +39,15 @@ func (c *CommentService) AddComment(ctx echo.Context, userID string, todoID uuid
 	}
 
 	// Log  the event of adding the comment
-	eventLogger:=middleware.GetLogger(ctx)
+	eventLogger := middleware.GetLogger(ctx)
 	eventLogger.Info().
-	   Str("user_id",userID).
-	   Str("todo_id",todoID.String()).
-	   Str("Comment_id",commentItem.ID.String()).
-	   Msg("Comment Added Successfully")
+		Str("user_id", userID).
+		Str("todo_id", todoID.String()).
+		Str("Comment_id", commentItem.ID.String()).
+		Msg("Comment Added Successfully")
 
-
-    return commentItem,nil
+	return commentItem, nil
 }
-
-
 
 func (s *CommentService) GetCommentsByTodoID(ctx echo.Context, userID string, todoID uuid.UUID) ([]comment.Comment, error) {
 	logger := middleware.GetLogger(ctx)
@@ -71,9 +67,6 @@ func (s *CommentService) GetCommentsByTodoID(ctx echo.Context, userID string, to
 
 	return comments, nil
 }
-
-
-
 
 func (s *CommentService) UpdateComment(ctx echo.Context, userID string, commentID uuid.UUID, content string) (*comment.Comment, error) {
 	logger := middleware.GetLogger(ctx)

@@ -17,20 +17,22 @@ func registerTodoRouter(r *echo.Group, h *handler.TodoHandler, ch *handler.Comme
 	todos.GET("", h.GetTodos)
 	todos.GET("/stats", h.GetTodoStats)
 
-
 	// Indivisual Todo Operations
-	dynamicTodo:=todos.Group("/:id")
-	dynamicTodo.GET("",h.GetTodoByID)
-	dynamicTodo.PATCH("",h.UpdateTodo)
-	dynamicTodo.DELETE("",h.DeleteTodo)
-
+	dynamicTodo := todos.Group("/:id")
+	dynamicTodo.GET("", h.GetTodoByID)
+	dynamicTodo.PATCH("", h.UpdateTodo)
+	dynamicTodo.DELETE("", h.DeleteTodo)
 
 	// Todo comments
-	todoComments:=dynamicTodo.Group("/comments")
-	todoComments.POST("",ch.AddComment)
-	todoComments.GET("",ch.GetCommentsByTodoID)
-
+	todoComments := dynamicTodo.Group("/comments")
+	todoComments.POST("", ch.AddComment)
+	todoComments.GET("", ch.GetCommentsByTodoID)
 
 	//Here You need to write the todo Attachments routers
-	
+
+	todoAttachments := dynamicTodo.Group("/attachments")
+	todoAttachments.POST("", h.UploadTodoAttachment)
+	todoAttachments.DELETE("/:attachmentId", h.DeleteTodoAttachment)
+	todoAttachments.GET("/:attachmentId/download", h.GetAttachmentPresignedURL)
+
 }

@@ -26,7 +26,6 @@ func NewS3Client(s *server.Server, cfg aws.Config) *S3Client {
 	}
 }
 
-
 func (s *S3Client) UploadFile(ctx context.Context, bucket string, fileName string, file io.Reader) (string, error) {
 	fileKey := fmt.Sprintf("%s_%d", fileName, time.Now().Unix())
 
@@ -65,7 +64,7 @@ func (s *S3Client) CreatePresinedUrl(ctx context.Context, bucket string, fileKey
 		s3.WithPresignExpires(expiration),
 	)
 	if err != nil {
-		return "", err 
+		return "", err
 	}
 
 	return presignedUrl.URL, nil
@@ -82,5 +81,3 @@ func (s *S3Client) DeleteObject(ctx context.Context, bucket string, key string) 
 	}
 	return nil
 }
-
-

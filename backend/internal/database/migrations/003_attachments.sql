@@ -1,11 +1,4 @@
--- Write your migrate up statements here
-
----- create above / drop below ----
-
--- Write your migrate down statements here. If this migration is irreversible
--- Then delete the separator line above.
-
-
+-- Create todo_attachments table
 CREATE TABLE todo_attachments(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at TIMESTAMP(3) WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -19,16 +12,20 @@ CREATE TABLE todo_attachments(
     mime_type TEXT
 );
 
-
-
 --  INDEXES for todo_attachments
 CREATE INDEX idx_todo_attachments_todo_id ON todo_attachments(todo_id);
 CREATE INDEX idx_todo_attachments_uploaded_by ON todo_attachments(uploaded_by);
 
-
--- Updated at trigger for tod attachments
-
+-- Updated at trigger for todo attachments
 CREATE TRIGGER set_updated_at_todo_attachments
     BEFORE UPDATE ON todo_attachments
     FOR EACH ROW 
     EXECUTE FUNCTION trigger_set_updated_at();
+
+---- create above / drop below ----
+
+-- Drop todo_attachments table and related objects
+DROP TRIGGER IF EXISTS set_updated_at_todo_attachments ON todo_attachments;
+DROP INDEX IF EXISTS idx_todo_attachments_uploaded_by;
+DROP INDEX IF EXISTS idx_todo_attachments_todo_id;
+DROP TABLE IF EXISTS todo_attachments;

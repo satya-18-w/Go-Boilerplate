@@ -9,8 +9,8 @@ import (
 
 	"github.com/newrelic/go-agent/v3/integrations/nrredis-v9"
 
-	"github.com/rs/zerolog"
 	"github.com/redis/go-redis/v9"
+	"github.com/rs/zerolog"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/database"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/lib/job"

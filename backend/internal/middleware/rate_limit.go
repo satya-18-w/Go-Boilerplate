@@ -15,7 +15,7 @@ func NewRateLimitMiddleware(s *server.Server) *RateLimitMiddleware {
 func (r *RateLimitMiddleware) RecordRateLimitHit(endpoint string) {
 	if r.server.LoggerService != nil && r.server.LoggerService.GetApplication() != nil {
 		r.server.LoggerService.GetApplication().RecordCustomEvent("RatelimitHit", map[string]interface{}{
-			"endpoint":endpoint,
+			"endpoint": endpoint,
 		})
 	}
 }

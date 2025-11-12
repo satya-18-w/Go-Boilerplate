@@ -1,10 +1,9 @@
 package middleware
 
 import (
-	
-	"github.com/newrelic/go-agent/v3/integrations/nrpkgerrors"
 	"github.com/labstack/echo/v4"
 	"github.com/newrelic/go-agent/v3/integrations/nrecho-v4"
+	"github.com/newrelic/go-agent/v3/integrations/nrpkgerrors"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
 )
@@ -34,19 +33,17 @@ func (tm *TracingMiddleWare) NewRelicMiddleWare() echo.MiddlewareFunc {
 	return nrecho.Middleware(tm.nrApp)
 }
 
-
-func (tm *TracingMiddleWare) EnhanceTracing() echo.MiddlewareFunc{
-	return func(next echo.HandlerFunc) echo.HandlerFunc{
-		return func(c echo.Context) error{
+func (tm *TracingMiddleWare) EnhanceTracing() echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
 			// Get New Relic transaction from context
-			txn:= newrelic.FromContext(c.Request().Context())
-			if txn == nil{
+			txn := newrelic.FromContext(c.Request().Context())
+			if txn == nil {
 				return next(c)
 			}
 			// service.name and service.environment are already set in logger and New Relic config
-			txn.AddAttribute("http.real_ip",c.RealIP())
-			txn.AddAttribute("http_user_agent",c.Request().UserAgent())
-
+			txn.AddAttribute("http.real_ip", c.RealIP())
+			txn.AddAttribute("http_user_agent", c.Request().UserAgent())
 
 			if requestID := GetRequestID(c); requestID != "" {
 				txn.AddAttribute("request.id", requestID)

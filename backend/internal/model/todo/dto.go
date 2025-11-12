@@ -66,8 +66,6 @@ type GetTodoQuery struct {
 	Completed    *bool      `query:"completed"`
 }
 
-
-
 func (q *GetTodoQuery) Validate() error {
 	validate := validator.New()
 	if err := validate.Struct(q); err != nil {
@@ -75,31 +73,30 @@ func (q *GetTodoQuery) Validate() error {
 	}
 
 	// Set defaulkt for Paginations
-	if q.Page == nil{
-		defaultpage :=1
-		q.Page=&defaultpage
+	if q.Page == nil {
+		defaultpage := 1
+		q.Page = &defaultpage
 	}
-	if q.Limit == nil{
+	if q.Limit == nil {
 		defaultlimit := 20
 		q.Limit = &defaultlimit
 	}
-	if q.Sort == nil{
+	if q.Sort == nil {
 		defaultsort := "created_at"
 		q.Sort = &defaultsort
 	}
-	if q.Order == nil{
+	if q.Order == nil {
 		defaultorder := "desc"
 		q.Order = &defaultorder
 	}
 	return nil
-	
+
 }
 
 //--------------------------------------------------------------------------------------------------------
 
-type GetTodoByIDPayload struct{
+type GetTodoByIDPayload struct {
 	ID uuid.UUID `param:"id" validate:"required,uuid"`
-
 }
 
 func (g *GetTodoByIDPayload) Validate() error {
@@ -107,19 +104,52 @@ func (g *GetTodoByIDPayload) Validate() error {
 	return validate.Struct(g)
 }
 
-
-//--------------------------------------------------------------------------------------------------------
-type DeleteTodoPayload struct{
+// --------------------------------------------------------------------------------------------------------
+type DeleteTodoPayload struct {
 	Id uuid.UUID `param:"id" validate:"required,uuid"`
 }
 
-func (d *DeleteTodoPayload) Validate() error{
-	validate:= validator.New()
+func (d *DeleteTodoPayload) Validate() error {
+	validate := validator.New()
 	return validate.Struct(d)
 }
 
 type GetTodoStatsPayload struct{}
 
-func (p *GetTodoStatsPayload) Validate() error{
+func (p *GetTodoStatsPayload) Validate() error {
 	return nil
+}
+
+// ---------------------------------------Todo Attachments payload--------------------------------------------------
+type UploadTodoAttachmentPayload struct {
+	TodoID uuid.UUID `param:"id" validate:"required,uuid"`
+}
+
+func (u *UploadTodoAttachmentPayload) Validate() error {
+	validate := validator.New()
+	return validate.Struct(u)
+}
+
+//-----------------------------------------------------------------------------------------------------------
+
+type DeleteTodoAttachmentPayload struct {
+	TodoID       uuid.UUID `param:"id" validate:"required,uuid"`
+	AttachmentID uuid.UUID `param:"attachmentId" validate:"required,uuid"`
+}
+
+func (u *DeleteTodoAttachmentPayload) Validate() error {
+	validate := validator.New()
+	return validate.Struct(u)
+}
+
+//-------------------------------------------------------------------------------------------------------------
+
+type GetAttachmentPresignedURLPayload struct {
+	TodoId       uuid.UUID `param:"id" validate:"required,uuid"`
+	AttachmentID uuid.UUID `param:"attachmentId" validate:"required,uuid"`
+}
+
+func (u *GetAttachmentPresignedURLPayload) Validate() error {
+	validate := validator.New()
+	return validate.Struct(u)
 }

@@ -67,7 +67,6 @@ func (h *CategoryHandler) UpdateCategory(c echo.Context) error {
 	)(c)
 }
 
-
 func (h *CategoryHandler) DeleteCategory(c echo.Context) error {
 	return HandleNoContent(
 		h.Handler,

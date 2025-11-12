@@ -23,14 +23,14 @@ const (
 	RequestIDKey    = "request_id"
 )
 
-func RequestID() echo.MiddlewareFunc { 
+func RequestID() echo.MiddlewareFunc {
 
-	return func(next echo.HandlerFunc) echo.HandlerFunc{
-		return func(c echo.Context) error{
-			requestID:= c.Request().Header.Get((RequestIDHeader))
-			if requestID == ""{
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			requestID := c.Request().Header.Get((RequestIDHeader))
+			if requestID == "" {
 				// if no requestid present then create a new request ID
-				requestID=uuid.New().String()
+				requestID = uuid.New().String()
 			}
 			c.Set(RequestIDKey, requestID)
 			c.Response().Header().Set(RequestIDHeader, requestID)
@@ -39,7 +39,6 @@ func RequestID() echo.MiddlewareFunc {
 		}
 	}
 }
-
 
 func GetRequestID(c echo.Context) string {
 	if requestID, ok := c.Get(RequestIDKey).(string); ok {

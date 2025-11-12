@@ -25,7 +25,7 @@ type Base struct {
 }
 
 type PaginatedResponse[T interface{}] struct {
-	Data      []T `json:"data"`
+	Data       []T `json:"data"`
 	Page       int `json:"page"`
 	Limit      int `json:"limit"`
 	Total      int `json:"total"`

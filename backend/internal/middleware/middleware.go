@@ -13,21 +13,19 @@ type Middlewares struct {
 	RateLimit       *RateLimitMiddleware
 }
 
-func NewMiddlewares(s *server.Server) *Middlewares{
+func NewMiddlewares(s *server.Server) *Middlewares {
 	// Get New relic Application instance from server
 	var nrApp *newrelic.Application
 	if s.LoggerService != nil {
 		nrApp = s.LoggerService.GetApplication()
 
-
 	}
 	return &Middlewares{
-		Global: NewGlobalMiddlewares(s),
-		Auth: NewAuthMiddleware(s),
+		Global:          NewGlobalMiddlewares(s),
+		Auth:            NewAuthMiddleware(s),
 		ContextEnhancer: NewContextEnhancer(s),
-		Tracing: NewTracingMiddleware(s,nrApp),
-		RateLimit: NewRateLimitMiddleware(s),
+		Tracing:         NewTracingMiddleware(s, nrApp),
+		RateLimit:       NewRateLimitMiddleware(s),
 	}
-
 
 }
