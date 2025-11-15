@@ -358,7 +358,7 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 }
 
 func (r *TodoRepository) UpdateTodo(ctx context.Context, userID string, payload *todo.UpdateTodoPayload) (*todo.Todo, error) {
-	stmt := `UPDATE todos SET`
+	stmt := `UPDATE todos SET `
 
 	args := pgx.NamedArgs{
 		"todo_id": payload.ID,
@@ -716,7 +716,7 @@ func (r *TodoRepository) GetCompletedTodosForUser(ctx context.Context, userID st
 			LEFT JOIN todo_categories c ON c.id = t.category_id AND c.user_id = @user_id
 			LEFT JOIN todos child ON child.parent_todo_id = t.id AND child.user_id = @user_id
 			LEFT JOIN todo_comments com ON com.todo_id = t.id AND com.user_id = @user_id
-			LEFT JOIN todo_attachments att ON att.todo_id=t.id AND att.user_id=@user_id
+			LEFT JOIN todo_attachments att ON att.todo_id=t.id
 		WHERE
 			t.user_id = @user_id
 			AND t.status = 'completed'
@@ -794,7 +794,7 @@ func (r *TodoRepository) GetOverdueTodosForUser(ctx context.Context, userID stri
 			LEFT JOIN todo_categories c ON c.id = t.category_id AND c.user_id = @user_id
 			LEFT JOIN todos child ON child.parent_todo_id = t.id AND child.user_id = @user_id
 			LEFT JOIN todo_comments com ON com.todo_id = t.id AND com.user_id = @user_id
-			LEFT JOIN todo_attachments att ON att.todo_id=t.id AND att.user_id=@user_id
+			LEFT JOIN todo_attachments att ON att.todo_id=t.id
 		WHERE
 			t.user_id = @user_id
 			AND t.due_date < NOW()
@@ -965,7 +965,5 @@ func (r *TodoRepository) UploadTodoAttachment(
 	return &attachment, nil
 
 }
-
-
 
 // CRON Requirements

@@ -66,6 +66,7 @@ func (c *JobContext) Close() {
 	}
 	if c.Server != nil && c.Server.Redis != nil {
 		c.Server.Redis.Close()
+
 	}
 	if c.JobClient != nil {
 		c.JobClient.Close()
@@ -89,7 +90,7 @@ func initJobClient(cfg *config.Config) (*asynq.Client, error) {
 type Job interface {
 	Name() string
 	Description() string
-	Run(ctx context.Context, jobCtx *JobContext)
+	Run(ctx context.Context, jobCtx *JobContext) error
 }
 
 type JobRunner struct {

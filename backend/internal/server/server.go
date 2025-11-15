@@ -13,6 +13,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/database"
+	"github.com/satya-18-w/go-TODO_TASKER/internal/lib/email"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/lib/job"
 	loggerpkg "github.com/satya-18-w/go-TODO_TASKER/internal/logger"
 )
@@ -53,7 +54,10 @@ func New(cfg *config.Config, logger *zerolog.Logger, loggerservice *loggerpkg.Lo
 
 	// Job Service
 	jobservice := job.NewJobService(logger, cfg)
-	jobservice.InitHandlers(cfg, logger)
+
+	// Initialize email client
+	emailClient := email.NewClient(cfg, logger)
+	jobservice.SetEmailClient(emailClient)
 
 	// Start job server
 	if err := jobservice.Start(); err != nil {

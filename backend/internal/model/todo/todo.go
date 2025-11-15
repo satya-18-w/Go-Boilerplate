@@ -59,7 +59,7 @@ type PopulatedTodo struct {
 type TodoStats struct {
 	Total     int `json:"total"`
 	Draft     int `json:"draft"`
-	Activate  int `json:"activate"`
+	Active    int `json:"active"`
 	Completed int `json:"completed"`
 	Archived  int `json:"archived"`
 	Overdue   int `json:"overdue"`
@@ -69,7 +69,7 @@ type UserWeeklyStats struct {
 	UserID         string `json:"user_id"`
 	CreatedCount   int    `json:"created_count"`
 	CompletedCount int    `json:"completed_count"`
-	ActivateCount  int    `json:"activate_count"`
+	ActiveCount  int    `json:"activate_count"`
 	OverdueCount   int    `json:"overdue_count"`
 }
 

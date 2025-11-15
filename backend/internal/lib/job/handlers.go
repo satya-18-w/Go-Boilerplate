@@ -79,7 +79,7 @@ func (j *JobService) handleReminderEmailTask(ctx context.Context, t *asynq.Task)
 			p.TodoID,
 			p.DueDate,
 		)
-	case "overdue_notification":
+	case "overdue-notification":
 		err = j.emailClient.SendOverdueNotificationEmail(
 			userEmail,
 			p.TodoTitle,

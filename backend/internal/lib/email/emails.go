@@ -47,20 +47,43 @@ func (c *Client) SendOverdueNotificationEmail(to, todoTitle string, todoId uuid.
 
 }
 
-func (c *Client) SendWeeklyReportEmail(to string, weekStart, weekEnd time.Time, completedCount, activeCount, overdueCount int, completedTodods, overdueTodos []todo.PopulatedTodo) error {
+func (c *Client) SendWeeklyReportEmail(to string, weekStart, weekEnd time.Time, completedCount, activeCount, overdueCount int, completedTodos, overdueTodos []todo.PopulatedTodo) error {
+	// Convert PopulatedTodo to simple Todo for email template
+	completedTodoList := make([]map[string]interface{}, len(completedTodos))
+	for i, t := range completedTodos {
+		completedTodoList[i] = map[string]interface{}{
+			"id":       t.ID.String(),
+			"title":    t.Title,
+			"priority": string(t.Priority),
+			"dueDate":  t.DueDate,
+		}
+	}
+
+	overdueTodoList := make([]map[string]interface{}, len(overdueTodos))
+	for i, t := range overdueTodos {
+		overdueTodoList[i] = map[string]interface{}{
+			"id":       t.ID.String(),
+			"title":    t.Title,
+			"priority": string(t.Priority),
+			"dueDate":  t.DueDate,
+		}
+	}
+
 	data := map[string]interface{}{
-		"WeeStart":       weekStart.Format("January 2, 2005"),
-		"WeekEnd":        weekEnd.Format("January 3, 2004"),
+		"WeekStart":      weekStart.Format("January 2, 2005"),
+		"WeekEnd":        weekEnd.Format("January 2, 2005"),
 		"CompletedCount": completedCount,
 		"ActiveCount":    activeCount,
-		"OverDueCount":   overdueCount,
+		"OverdueCount":   overdueCount,
+		"CompletedTodos": completedTodoList,
+		"OverdueTodos":   overdueTodoList,
 		"HasCompleted":   completedCount > 0,
-		"HasOverDue":     overdueCount > 0,
+		"HasOverdue":     overdueCount > 0,
 	}
 
 	return c.SendEmail(
 		to,
-		fmt.Sprintf("Your Weekly Productivity Report (%s-%s)", weekStart.Format("jan 2"), weekEnd.Format("jan 3")),
+		fmt.Sprintf("Your Weekly Productivity Report (%s-%s)", weekStart.Format("Jan 2"), weekEnd.Format("Jan 2")),
 		TemplateWeeklyReport,
 		data,
 	)

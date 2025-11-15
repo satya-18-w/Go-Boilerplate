@@ -50,13 +50,17 @@ func (j *JobService) SetAuthService(authService AuthServiceInterface) {
 	j.authService = authService
 }
 
+func (j *JobService) SetEmailClient(emailClient *email.Client) {
+	j.emailClient = emailClient
+}
+
 func (j *JobService) Start() error {
 	// Register task handlers
 	mux := asynq.NewServeMux()
 
 	mux.HandleFunc(TaskWelcome, j.handleWelcomeEmailTask)
 	mux.HandleFunc(TaskReminderEmail, j.handleReminderEmailTask)
-	mux.HandleFunc(TaskWeeklyReportEmail,j.handleWeeklyReportEmailTask)
+	mux.HandleFunc(TaskWeeklyReportEmail, j.handleWeeklyReportEmailTask)
 	j.logger.Info().Msg("Starting Backgrond Job Server")
 	if err := j.Server.Start(mux); err != nil {
 		return err

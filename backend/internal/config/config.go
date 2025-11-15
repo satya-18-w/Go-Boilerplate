@@ -22,6 +22,7 @@ type Config struct {
 	Observability *ObservabilityConfig `koanf:"observability"`
 	Integration   IntegrationConfig    `koanf:"integration" validate:"required"`
 	AWS           AWSConfig            `koanf:"aws" validate:"required"`
+	CRON          *CronConfig          `koanf:"cron"`
 }
 type AWSConfig struct {
 	Region          string `koanf:"region" validate:"required"`
@@ -36,6 +37,7 @@ type Primary struct {
 
 type IntegrationConfig struct {
 	ResendAPIKey string `koanf:"resend_api_key" validate:"required"`
+	SenderEmail  string `koanf:"sender_email" validate:"required"`
 }
 
 type ServerConfig struct {
@@ -60,12 +62,28 @@ type DatabaseConfig struct {
 }
 
 type RedisConfig struct {
-	Address string `koanf:"address" validate:"required"`
+	Address  string `koanf:"address" validate:"required"`
 	Password string `koanf:"password"`
 }
 
 type AuthConfig struct {
 	SecretKey string `koanf:"secret_key" validate:"required"`
+}
+
+type CronConfig struct {
+	ArchiveDaysThreshold        int `koanf:"archive_days_threshold"`
+	BatchSize                   int `koanf:"batch_size"`
+	ReminderHours               int `koanf:"reminder_hours"`
+	MaxTodosPerUserNotification int `koanf:"max_todo_per_user_notification"`
+}
+
+func DefaultCronConfig() *CronConfig {
+	return &CronConfig{
+		ArchiveDaysThreshold:        30,
+		BatchSize:                   100,
+		ReminderHours:               24,
+		MaxTodosPerUserNotification: 10,
+	}
 }
 
 func LoadConfig() (*Config, error) {
@@ -96,6 +114,10 @@ func LoadConfig() (*Config, error) {
 
 	if err := mainconfig.Observability.Validate(); err != nil {
 		logger.Fatal().Err(err).Msg("Observability config validation failed")
+	}
+
+	if mainconfig.CRON == nil {
+		mainconfig.CRON = DefaultCronConfig()
 	}
 	return mainconfig, nil
 

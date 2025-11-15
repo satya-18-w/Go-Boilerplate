@@ -12,20 +12,22 @@ import (
 )
 
 type Client struct {
-	client *resend.Client
-	logger *zerolog.Logger
+	client      *resend.Client
+	logger      *zerolog.Logger
+	senderEmail string
 }
 
 func NewClient(cfg *config.Config, logger *zerolog.Logger) *Client {
 	return &Client{
-		client: resend.NewClient(cfg.Integration.ResendAPIKey),
-		logger: logger,
+		client:      resend.NewClient(cfg.Integration.ResendAPIKey),
+		logger:      logger,
+		senderEmail: cfg.Integration.SenderEmail,
 	}
 
 }
 
 func (c *Client) SendEmail(to, subject string, templateName Template, data map[string]any) error {
-	templPath := fmt.Sprintf("%s%s.html", "templates/emails", templateName)
+	templPath := fmt.Sprintf("%s%s.html", "templates/emails/", templateName)
 
 	templ, err := template.ParseFiles(templPath)
 	if err != nil {
@@ -38,7 +40,7 @@ func (c *Client) SendEmail(to, subject string, templateName Template, data map[s
 	}
 
 	params := &resend.SendEmailRequest{
-		From:    fmt.Sprintf("%s <%s>", "TODO_TASKER", "satyajitsamal198076@gmail.com"),
+		From:    fmt.Sprintf("%s <%s>", "TODO_TASKER", c.senderEmail),
 		To:      []string{to},
 		Subject: subject,
 		Html:    body.String(),
