@@ -1,5 +1,5 @@
 {
-  "name": "@TODO_TASKER/zod",
+  "name": "@tasker/zod",
   "version": "1.0.0",
   "description": "Package which exports all TODO_TASKER zod schemas and types",
   "type": "module",

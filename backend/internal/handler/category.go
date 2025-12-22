@@ -24,6 +24,7 @@ func NewCategoryHandler(s *server.Server, categoryService *service.CategoryServi
 	}
 }
 
+
 func (h *CategoryHandler) CreateCategory(c echo.Context) error {
 	return Handle(
 		h.Handler,

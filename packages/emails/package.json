@@ -1,5 +1,5 @@
 {
-  "name": "@TODO_TASKER/emails",
+  "name": "@tasker/emails",
   "version": "1.0.0",
   "description": "Package to manage emails",
   "type": "module",

@@ -28,6 +28,7 @@ type Server struct {
 	Job           *job.JobService
 }
 
+
 func New(cfg *config.Config, logger *zerolog.Logger, loggerservice *loggerpkg.LoggerService) (*Server, error) {
 	db, err := database.New(cfg, logger, loggerservice)
 	if err != nil {

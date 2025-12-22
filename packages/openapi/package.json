@@ -1,5 +1,5 @@
 {
-  "name": "@TODO_TASKER/openapi",
+  "name": "@tasker/openapi",
   "version": "1.0.0",
   "description": "Generates OpenAPI doc",
   "type": "module",
@@ -12,7 +12,7 @@
   "exports": {
     "./contracts": {
       "types": "./dist/contracts/index.d.ts",
-      "default": "./dist/contract/index.js"
+      "default": "./dist/contracts/index.js"
     }
   },
   "keywords": [],
@@ -20,7 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@anatine/zod-openapi": "^2.2.7",
-    "@TODO_TASKER/zod": "workspace:*",
+    "@tasker/zod": "workspace:*",
     "@ts-rest/core": "^3.52.1",
     "@ts-rest/open-api": "^3.52.1",
     "ts-pattern": "^5.7.0",

@@ -29,6 +29,7 @@ type AWSConfig struct {
 	AccessKeyID     string `koanf:"access_key_id" validate:"required"`
 	SecretAccessKey string `koanf:"secret_access_key" validate:"required"`
 	UploadBucket    string `koanf:"upload_bucket" validate:"required"`
+	EndpointURL     string `koanf:"endpoint_url"`
 }
 
 type Primary struct {

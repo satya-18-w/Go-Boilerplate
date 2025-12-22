@@ -55,6 +55,7 @@ func (j *JobService) handleReminderEmailTask(ctx context.Context, t *asynq.Task)
 		return fmt.Errorf("Failed to unmarshal reminder email payload : %w", err)
 	}
 
+	
 	j.logger.Info().
 		Str("type", p.TaskType).
 		Str("user_id", p.UserID).

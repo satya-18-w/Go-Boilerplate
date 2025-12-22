@@ -25,6 +25,7 @@ func NewHandler(s *server.Server) Handler {
 	}
 }
 
+
 //  we are defining the signature of the handler function used in our application
 
 // Handlerfunc represent a typed handler function that processes a request and returns a response

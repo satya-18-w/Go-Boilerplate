@@ -1,6 +1,28 @@
 [?9001h[?1004h[?25l[2J[m[35m[2m[H$[m[1m[2m[1Cemail dev --dir ./src/templates -p 3001
-]0;C:\WINDOWS\system32\cmd.exe[?25h[22m[92m    React Email 4.0.2
+]0;C:\Users\Satyajit Samal\Downloads\bun-windows-x64\bun-windows-x64\bun.exe[?25h[22m[92m    React Email 4.0.2
 [?25l[m    Running preview at:          http://localhost:3001[5;1H  [36m⠋ [mGetting react-email preview server ready...
-[K[205C[5;1H  [36m⠙ [mGetting react-email preview server ready...[K[158C
-[K[205C[5;1H  [36m⠹ [mGetting react-email preview server ready...[K[158C
-[K[205C[5;1H  [32m✔ [mReady in 0.6s[K[7;1H[?25h
+[K[104C[5;1H  [36m⠙ [mGetting react-email preview server ready...[K[57C
+[K[104C[5;1H  [36m⠹ [mGetting react-email preview server ready...[K[57C
+[K[104C[5;1H  [32m✔ [mReady in 0.8s[K[7;1H[?25h[?25l  [36m⠋ [mRendering email template due-date-reminder.tsx
+  [36m⠋ [mRendering email template overdue-notification.tsx
+  [36m⠋ [mRendering email template weekly-report.tsx
+  [36m⠙ [mRendering email template due-date-reminder.tsx[K
+[K[104C[K[104C[10;1H  [36m⠙ [mRendering email template weekly-report.tsx[K
+[K[104C[10;1H  [36m⠹ [mRendering email template due-date-reminder.tsx[K
+[K[104C[K[104C[10;1H[K
+[K[104C[10;1H  [36m⠹ [mRendering email template welcome.tsx
+[K[104C[10;1H  [36m⠸ [mRendering email template due-date-reminder.tsx[K[54C
+[K[104C[10;1H[K[104C  [36m⠸ [mRendering email template overdue-notification.tsx
+[K[104C[10;1H[K[104C  [36m⠸ [mRendering email template weekly-report.tsx
+[K[104C[10;1H  [36m⠸ [mRendering email template welcome.tsx[K[64C
+[K[104C[10;1H[K[104C  [36m⠼ [mRendering email template due-date-reminder.tsx
+[K[104C[10;1H[K[104C  [36m⠼ [mRendering email template overdue-notification.tsx
+[K[104C[10;1H[K[104C  [36m⠼ [mRendering email template weekly-report.tsx
+[K[104C[10;1H[K[104C  [36m⠼ [mRendering email template welcome.tsx
+[K[104C[10;1H[K[104C  [36m⠴ [mRendering email template due-date-reminder.tsx
+[K[104C[10;1H  [36m⠴ [mRendering email template welcome.tsx[K
+[K[104C[K[104C[10;1H  [36m⠦ [mRendering email template welcome.tsx[K
+[K[104C[K[104C[10;1H  [36m⠧ [mRendering email template welcome.tsx[K
+[K[104C[K[104C[10;1H  [32m✔ [mSuccessfully rendered overdue-notification.tsx in [31m4668ms[K[m
+[K[?25h[?25l[10;1H  [32m✔ [mSuccessfully rendered welcome.tsx in [31m4662ms[K[m
+[K[?25h

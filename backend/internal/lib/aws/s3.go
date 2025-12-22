@@ -20,9 +20,19 @@ type S3Client struct {
 }
 
 func NewS3Client(s *server.Server, cfg aws.Config) *S3Client {
+	awsConfig := s.Config.AWS
+
+	// Configure S3 client with options for R2/Sevalla compatibility
+	client := s3.NewFromConfig(cfg, func(o *s3.Options) {
+		// Enable path-style access for R2/Sevalla
+		if awsConfig.EndpointURL != "" {
+			o.UsePathStyle = true
+		}
+	})
+
 	return &S3Client{
 		server: s,
-		Client: s3.NewFromConfig(cfg),
+		Client: client,
 	}
 }
 

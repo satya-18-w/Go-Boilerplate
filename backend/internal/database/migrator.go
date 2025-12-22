@@ -15,6 +15,7 @@ import (
 	"github.com/satya-18-w/go-TODO_TASKER/internal/config"
 )
 
+//go:embed migrations/*.sql
 var migrations embed.FS
 
 func Migrate(ctx context.Context, logger zerolog.Logger, cfg *config.Config) error {

@@ -54,26 +54,24 @@ func EnqueueReminderEmail(client *asynq.Client, task *ReminderEmailTask) error {
 	return err
 }
 
-
-type WeeklyReportEmailTask  struct {
-	UserID string `json:"user_id"`
-	WeekStart time.Time `json:"week_start"`
-	WeekEnd time.Time `json:"week_end"`
-	CompletedCount int `json:"completed_count"`
-	ActiveCount int `json:"active_count"`
-	OverDueCount int `json:"overdue_count"`
+type WeeklyReportEmailTask struct {
+	UserID         string               `json:"user_id"`
+	WeekStart      time.Time            `json:"week_start"`
+	WeekEnd        time.Time            `json:"week_end"`
+	CompletedCount int                  `json:"completed_count"`
+	ActiveCount    int                  `json:"active_count"`
+	OverDueCount   int                  `json:"overdue_count"`
 	CompletedTodos []todo.PopulatedTodo `json:"completed_todos"`
 	OverDueTodos   []todo.PopulatedTodo `json:"overdue_todos"`
 }
 
-
-func EnqueueWeeklyReportEmail(client *asynq.Client, task *WeeklyReportEmailTask) error{
-	payload,err:=json.Marshal(task)
-	if err != nil{
+func EnqueueWeeklyReportEmail(client *asynq.Client, task *WeeklyReportEmailTask) error {
+	payload, err := json.Marshal(task)
+	if err != nil {
 		return nil
 	}
-	asynqTask:=asynq.NewTask(TaskWeeklyReportEmail,payload, asynq.MaxRetry(3),asynq.Queue("default"),asynq.Timeout(60*time.Second))
+	asynqTask := asynq.NewTask(TaskWeeklyReportEmail, payload, asynq.MaxRetry(3), asynq.Queue("default"), asynq.Timeout(60*time.Second))
 
-	_,err = client.Enqueue(asynqTask)
+	_, err = client.Enqueue(asynqTask)
 	return err
 }

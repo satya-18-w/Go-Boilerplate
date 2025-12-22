@@ -34,10 +34,9 @@ func main() {
 	defer loggerservice.Shutdown()
 	log := logger.NewLoggerWithService(cfg.Observability, loggerservice)
 
-	if cfg.Primary.Env != "local" {
-		if err := database.Migrate(context.Background(), log, cfg); err != nil {
-			log.Fatal().Err(err).Msg("Failed to database Migrate")
-		}
+	// Run database migrations
+	if err := database.Migrate(context.Background(), log, cfg); err != nil {
+		log.Fatal().Err(err).Msg("Failed to database Migrate")
 	}
 
 	// Initialize server
