@@ -7,10 +7,12 @@
 [K
 [K
 [K
-[K
-[K
-[K[H[?25h1:58:13 pm - Starting compilation in watch mode...
+[K[H[?25h1:43:22 pm - Starting compilation in watch mode...
 [0] 
 [1] tsc-alias info: [Watching for file changes...]
 [0] 
-[0] 1:58:14 pm - Found 0 errors. Watching for file changes.
+[0] 1:43:23 pm - Found 0 errors. Watching for file changes.
+[0] ^C
+[1] tsc-alias -w exited with code 3221225786
+[0] tsc -w exited with code 3221225786
+[?9001l[?1004l
