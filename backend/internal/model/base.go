@@ -29,5 +29,6 @@ type PaginatedResponse[T interface{}] struct {
 	Page       int `json:"page"`
 	Limit      int `json:"limit"`
 	Total      int `json:"total"`
-	Totalpages int `json:"totalPages"`
+	TotalPages int `json:"totalPages"`
 }
+

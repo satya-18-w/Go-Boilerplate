@@ -343,7 +343,7 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 				Page:       *query.Page,
 				Limit:      *query.Limit,
 				Total:      0,
-				Totalpages: 0,
+				TotalPages: 0,
 			}, nil
 		}
 		return nil, fmt.Errorf("failed to collect rows from table:todos for user_id=%s: %w", userId, err)
@@ -353,7 +353,7 @@ func (r *TodoRepository) GetTodos(ctx context.Context, userId string, query *tod
 		Page:       *query.Page,
 		Limit:      *query.Limit,
 		Total:      total,
-		Totalpages: (total + *query.Limit - 1) / *query.Limit,
+		TotalPages: (total + *query.Limit - 1) / *query.Limit,
 	}, nil
 }
 
@@ -967,3 +967,4 @@ func (r *TodoRepository) UploadTodoAttachment(
 }
 
 // CRON Requirements
+

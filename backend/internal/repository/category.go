@@ -143,7 +143,7 @@ func (r *CategoryRepository) GetCategories(ctx context.Context, userID string,
 				Page:       *query.Page,
 				Limit:      *query.Limit,
 				Total:      0,
-				Totalpages: 0,
+				TotalPages: 0,
 			}, nil
 		}
 		return nil, fmt.Errorf("failed to collect rows from table:todo_categories for user_id=%s: %w", userID, err)
@@ -179,7 +179,7 @@ func (r *CategoryRepository) GetCategories(ctx context.Context, userID string,
 		Page:       *query.Page,
 		Limit:      *query.Limit,
 		Total:      total,
-		Totalpages: (total + *query.Limit - 1) / *query.Limit,
+		TotalPages: (total + *query.Limit - 1) / *query.Limit,
 	}, nil
 }
 
@@ -244,3 +244,4 @@ func (r *CategoryRepository) DeleteCategory(ctx context.Context, userID string, 
 
 	return nil
 }
+
