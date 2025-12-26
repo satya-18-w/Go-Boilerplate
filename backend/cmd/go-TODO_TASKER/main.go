@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -29,10 +30,12 @@ func main() {
 	}
 
 	// Initialize new relic server
-
+	fmt.Println("Initializing New Relic/Logger Service...")
 	loggerservice := logger.NewLoggerService(cfg.Observability)
+	fmt.Println("Logger Service initialized. creating main logger...")
 	defer loggerservice.Shutdown()
 	log := logger.NewLoggerWithService(cfg.Observability, loggerservice)
+	fmt.Println("Main Logger created. Starting migration...")
 
 	// Run database migrations
 	migrationCtx, migrationCancel := context.WithTimeout(context.Background(), 30*time.Second)
