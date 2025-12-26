@@ -154,12 +154,12 @@ export declare const apiContract: {
             path: "/v1/todos";
             responses: {
                 200: import("zod").ZodSchema<import("@TODO_TASKER/zod").PaginatedResponse<{
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -183,12 +183,12 @@ export declare const apiContract: {
                         updatedAt: string;
                     } | null;
                     children: {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -223,12 +223,12 @@ export declare const apiContract: {
                         mimeType: string | null;
                     }[];
                 }>, import("zod").ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -252,12 +252,12 @@ export declare const apiContract: {
                         updatedAt: string;
                     } | null;
                     children: {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -388,12 +388,12 @@ export declare const apiContract: {
                     createdAt: import("zod").ZodString;
                     updatedAt: import("zod").ZodString;
                 }, "strip", import("zod").ZodTypeAny, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -408,12 +408,12 @@ export declare const apiContract: {
                     } | null;
                     sortOrder: number;
                 }, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -530,12 +530,12 @@ export declare const apiContract: {
                         createdAt: import("zod").ZodString;
                         updatedAt: import("zod").ZodString;
                     }, "strip", import("zod").ZodTypeAny, {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -550,12 +550,12 @@ export declare const apiContract: {
                         } | null;
                         sortOrder: number;
                     }, {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -624,12 +624,12 @@ export declare const apiContract: {
                         mimeType: string | null;
                     }>, "many">;
                 }, "strip", import("zod").ZodTypeAny, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -653,12 +653,12 @@ export declare const apiContract: {
                         updatedAt: string;
                     } | null;
                     children: {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -693,12 +693,12 @@ export declare const apiContract: {
                         mimeType: string | null;
                     }[];
                 }, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -722,12 +722,12 @@ export declare const apiContract: {
                         updatedAt: string;
                     } | null;
                     children: {
+                        status: "draft" | "active" | "completed" | "archived";
                         id: string;
                         userId: string;
                         description: string | null;
                         createdAt: string;
                         updatedAt: string;
-                        status: "draft" | "active" | "completed" | "archived";
                         title: string;
                         priority: "low" | "medium" | "high";
                         dueDate: string | null;
@@ -861,12 +861,12 @@ export declare const apiContract: {
                     createdAt: import("zod").ZodString;
                     updatedAt: import("zod").ZodString;
                 }, "strip", import("zod").ZodTypeAny, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -881,12 +881,12 @@ export declare const apiContract: {
                     } | null;
                     sortOrder: number;
                 }, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -940,18 +940,18 @@ export declare const apiContract: {
                     archived: import("zod").ZodNumber;
                     overdue: import("zod").ZodNumber;
                 }, "strip", import("zod").ZodTypeAny, {
+                    total: number;
                     draft: number;
                     active: number;
                     completed: number;
                     archived: number;
-                    total: number;
                     overdue: number;
                 }, {
+                    total: number;
                     draft: number;
                     active: number;
                     completed: number;
                     archived: number;
-                    total: number;
                     overdue: number;
                 }>;
             };

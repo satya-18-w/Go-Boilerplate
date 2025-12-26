@@ -57,12 +57,12 @@ export declare const todoContract: {
         path: "/v1/todos";
         responses: {
             200: z.ZodType<import("@TODO_TASKER/zod").PaginatedResponse<{
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -86,12 +86,12 @@ export declare const todoContract: {
                     updatedAt: string;
                 } | null;
                 children: {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -126,12 +126,12 @@ export declare const todoContract: {
                     mimeType: string | null;
                 }[];
             }>, z.ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -155,12 +155,12 @@ export declare const todoContract: {
                     updatedAt: string;
                 } | null;
                 children: {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -291,12 +291,12 @@ export declare const todoContract: {
                 createdAt: z.ZodString;
                 updatedAt: z.ZodString;
             }, "strip", z.ZodTypeAny, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -311,12 +311,12 @@ export declare const todoContract: {
                 } | null;
                 sortOrder: number;
             }, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -433,12 +433,12 @@ export declare const todoContract: {
                     createdAt: z.ZodString;
                     updatedAt: z.ZodString;
                 }, "strip", z.ZodTypeAny, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -453,12 +453,12 @@ export declare const todoContract: {
                     } | null;
                     sortOrder: number;
                 }, {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -527,12 +527,12 @@ export declare const todoContract: {
                     mimeType: string | null;
                 }>, "many">;
             }, "strip", z.ZodTypeAny, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -556,12 +556,12 @@ export declare const todoContract: {
                     updatedAt: string;
                 } | null;
                 children: {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -596,12 +596,12 @@ export declare const todoContract: {
                     mimeType: string | null;
                 }[];
             }, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -625,12 +625,12 @@ export declare const todoContract: {
                     updatedAt: string;
                 } | null;
                 children: {
+                    status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                    status: "draft" | "active" | "completed" | "archived";
                     title: string;
                     priority: "low" | "medium" | "high";
                     dueDate: string | null;
@@ -764,12 +764,12 @@ export declare const todoContract: {
                 createdAt: z.ZodString;
                 updatedAt: z.ZodString;
             }, "strip", z.ZodTypeAny, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -784,12 +784,12 @@ export declare const todoContract: {
                 } | null;
                 sortOrder: number;
             }, {
+                status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-                status: "draft" | "active" | "completed" | "archived";
                 title: string;
                 priority: "low" | "medium" | "high";
                 dueDate: string | null;
@@ -843,18 +843,18 @@ export declare const todoContract: {
                 archived: z.ZodNumber;
                 overdue: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
+                total: number;
                 draft: number;
                 active: number;
                 completed: number;
                 archived: number;
-                total: number;
                 overdue: number;
             }, {
+                total: number;
                 draft: number;
                 active: number;
                 completed: number;
                 archived: number;
-                total: number;
                 overdue: number;
             }>;
         };

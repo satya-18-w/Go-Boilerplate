@@ -16,7 +16,7 @@ type CreateTodoPayload struct {
 	Title        string     `json:"title" validate:"required,min=1,max=255"`
 	Description  *string    `json:"description" validate:"omitempty,max=1000"`
 	Priority     *Priority  `json:"priority" validate:"omitempty,oneof=low medium high"`
-	DueDate      *time.Time `json:"dueDate" validate:"omitempty,uuid"`
+	DueDate      *time.Time `json:"dueDate" validate:"omitempty"`
 	ParentTodoID *uuid.UUID `json:"parentTodoId" validate:"omitempty,uuid"`
 	CategoryID   *uuid.UUID `json:"categoryId" validate:"omitempty,uuid"`
 	Metadata     *Metadata  `json:"metadata"`
@@ -36,7 +36,7 @@ type UpdateTodoPayload struct {
 	Description  *string    `json:"description" validate:"omitempty,max=1000"`
 	Status       *Status    `json:"status" validate:"omitempty,oneof=draft active completed archived"`
 	Priority     *Priority  `json:"priority" validate:"omitempty,oneof=low medium high"`
-	DueDate      *time.Time `json:"dueDate" validate:"omitempty,uuid"`
+	DueDate      *time.Time `json:"dueDate" validate:"omitempty"`
 	ParentTodoID *uuid.UUID `json:"parentTodoId" validate:"omitempty,uuid"`
 	CategoryID   *uuid.UUID `json:"categoryId" validate:"omitempty,uuid"`
 	Metadata     *Metadata  `json:"metadata"`

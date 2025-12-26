@@ -1,7 +1,2 @@
-[?9001h[?1004h[?25l[2J[m[35m[2m[H$[m[1m[2m[1Cemail dev --dir ./src/templates -p 3001
-]0;C:\Users\Satyajit Samal\Downloads\bun-windows-x64\bun-windows-x64\bun.exe[?25h[22m[92m    React Email 4.0.2
-[?25l[m    Running preview at:          http://localhost:3001[5;1H  [36m⠋ [mGetting react-email preview server ready...
-[K[166C[5;1H  [36m⠙ [mGetting react-email preview server ready...[K[119C
-[K[166C[5;1H  [36m⠹ [mGetting react-email preview server ready...[K[119C
-[K[166C[5;1H  [32m✔ [mReady in 1.1s[K[7;1H[?25h[31merror[m[2m:[22m script [1m"dev"[22m exited with code 1
-[?9001l[?1004l
+[?9001h[?1004h[?25l[2J[m[35m[2m[H$[m [1m[2memail dev --dir ./src/templates -p 3001
+]0;C:\Users\Satyajit Samal\Downloads\bun-windows-x64\bun-windows-x64\bun.exe[?25h
