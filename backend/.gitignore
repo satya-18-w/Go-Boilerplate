@@ -1,0 +1,16 @@
+# Environment files (contain secrets - NEVER commit!)
+.env
+.env.local
+.env.*.local
+
+# Compiled binaries
+*.exe
+bin/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
