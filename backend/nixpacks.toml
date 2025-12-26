@@ -1,0 +1,27 @@
+# Nixpacks configuration for Backend (Go 1.25)
+# Builds the Go API server and cron worker
+
+[phases.setup]
+nixPkgs = ["go_1_25"]
+
+[phases.install]
+cmds = [
+  "go mod download"
+]
+
+[phases.build]
+cmds = [
+  # Build main API server
+  "go build -ldflags='-s -w' -o bin/tasker ./cmd/go-TODO_TASKER",
+  # Build cron worker
+  "go build -ldflags='-s -w' -o bin/cron ./cmd/cron"
+]
+
+[start]
+cmd = "./bin/tasker"
+
+[variables]
+GO111MODULE = "on"
+CGO_ENABLED = "0"
+GOOS = "linux"
+GOARCH = "amd64"
