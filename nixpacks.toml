@@ -20,7 +20,7 @@ cmds = [
 
 # Serve static files using a simple static server
 [start]
-cmd = "bunx serve -s apps/frontend/dist -l 3000"
+cmd = "bunx serve -s apps/frontend/dist -l 8080"
 
 [variables]
 NODE_ENV = "production"
