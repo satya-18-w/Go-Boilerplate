@@ -28,7 +28,6 @@ type Server struct {
 	Job           *job.JobService
 }
 
-
 func New(cfg *config.Config, logger *zerolog.Logger, loggerservice *loggerpkg.LoggerService) (*Server, error) {
 	db, err := database.New(cfg, logger, loggerservice)
 	if err != nil {
@@ -37,7 +36,9 @@ func New(cfg *config.Config, logger *zerolog.Logger, loggerservice *loggerpkg.Lo
 
 	// Redis Client with New Relic Integration
 	redisclient := redis.NewClient(&redis.Options{
-		Addr: cfg.Redis.Address,
+		Addr:     cfg.Redis.Address,
+		Password: cfg.Redis.Password,
+		DB:       cfg.Redis.DB,
 	})
 
 	// Add New Relic redis hooks if avaliable
