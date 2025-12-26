@@ -1,5 +1,5 @@
 import { getSecurityMetadata } from "../utils.js";
-import { ZTodoComment } from "@TODO_TASKER/zod";
+import { ZTodoComment } from "@tasker/zod";
 import { initContract } from "@ts-rest/core";
 import z from "zod";
 

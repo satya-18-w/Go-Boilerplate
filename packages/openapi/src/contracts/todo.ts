@@ -5,7 +5,7 @@ import {
   ZTodo,
   ZTodoAttachment,
   ZTodoStats,
-} from "@TODO_TASKER/zod";
+} from "@tasker/zod";
 import { initContract } from "@ts-rest/core";
 import z from "zod";
 
@@ -15,7 +15,7 @@ const metadata = getSecurityMetadata();
 
 export const todoContract = c.router(
   {
-    getTodos: { 
+    getTodos: {
       summary: "Get all todos",
       path: "/todos",
       method: "GET",
