@@ -38,7 +38,7 @@ func main() {
 	fmt.Println("Main Logger created. Starting migration...")
 
 	// Run database migrations
-	migrationCtx, migrationCancel := context.WithTimeout(context.Background(), 30*time.Second)
+	migrationCtx, migrationCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer migrationCancel()
 	if err := database.Migrate(migrationCtx, log, cfg); err != nil {
 		log.Fatal().Err(err).Msg("Failed to database Migrate")

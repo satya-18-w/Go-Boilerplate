@@ -30,6 +30,16 @@ func Migrate(ctx context.Context, logger zerolog.Logger, cfg *config.Config) err
 		cfg.Database.Name,
 		cfg.Database.SSLMode,
 	)
+
+	// Mask password for logging
+	maskedDSN := fmt.Sprintf("postgres://%s:***@%s/%s?sslmode=%s",
+		cfg.Database.User,
+		hostport,
+		cfg.Database.Name,
+		cfg.Database.SSLMode,
+	)
+	fmt.Printf("Migrator: Connecting to DB with DSN: %s\n", maskedDSN)
+
 	conn, err := pgx.Connect(ctx, dsn)
 	if err != nil {
 		return err
