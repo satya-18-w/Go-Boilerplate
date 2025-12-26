@@ -37,7 +37,7 @@ func (j *DueDateReminderJob) Run(ctx context.Context, jobCtx *JobContext) error 
 	enqueuedCount := 0
 
 	for _, todo := range todos {
-		if len(userTodos[todo.UserID]) < jobCtx.Config.CRON.MaxTodosPerUserNotification {
+		if len(userTodos[todo.UserID]) < jobCtx.Config.Cron.MaxTodosPerUserNotification {
 			userTodos[todo.UserID] = append(userTodos[todo.UserID], todo.Title)
 		}
 
@@ -97,7 +97,7 @@ func (j *OverDueNotificationsJob) Description() string {
 }
 
 func (j *OverDueNotificationsJob) Run(ctx context.Context, jobCtx *JobContext) error {
-	todos, err := jobCtx.Repositories.Todo.GetOverdueTodos(ctx, jobCtx.Config.CRON.BatchSize)
+	todos, err := jobCtx.Repositories.Todo.GetOverdueTodos(ctx, jobCtx.Config.Cron.BatchSize)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (j *OverDueNotificationsJob) Run(ctx context.Context, jobCtx *JobContext) e
 	userTodos := make(map[string][]string)
 	enqueuedCount := 0
 	for _, todo := range todos {
-		if len(userTodos[todo.UserID]) < jobCtx.Config.CRON.MaxTodosPerUserNotification {
+		if len(userTodos[todo.UserID]) < jobCtx.Config.Cron.MaxTodosPerUserNotification {
 			userTodos[todo.UserID] = append(userTodos[todo.UserID], todo.Title)
 
 		}
@@ -247,13 +247,13 @@ func (j *AutoArchiveJob) Description() string {
 	return "Archive old completed todos"
 }
 func (j *AutoArchiveJob) Run(ctx context.Context, jobCtx *JobContext) error {
-	cutoffDate := time.Now().AddDate(0, 0, -jobCtx.Config.CRON.ArchiveDaysThreshold)
+	cutoffDate := time.Now().AddDate(0, 0, -jobCtx.Config.Cron.ArchiveDaysThreshold)
 
 	jobCtx.Server.Logger.Info().
 		Time("cutoff_date", cutoffDate).
 		Msg("Searching for completed todos to archive")
 
-	todos, err := jobCtx.Repositories.Todo.GetCompletedTodoOlderThan(ctx, cutoffDate, jobCtx.Config.CRON.BatchSize)
+	todos, err := jobCtx.Repositories.Todo.GetCompletedTodoOlderThan(ctx, cutoffDate, jobCtx.Config.Cron.BatchSize)
 	if err != nil {
 		return err
 	}
