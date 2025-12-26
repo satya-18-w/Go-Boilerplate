@@ -1,5 +1,6 @@
-# Nixpacks configuration for Backend (Go 1.25) - Standalone
+# Nixpacks configuration for Backend (Go 1.22)
 # This config works when Sevalla's root directory is set to "backend"
+# Last updated: 2025-12-27
 
 [phases.setup]
 nixPkgs = ["go_1_22"]
