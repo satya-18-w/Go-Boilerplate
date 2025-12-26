@@ -19,6 +19,7 @@ import (
 var migrations embed.FS
 
 func Migrate(ctx context.Context, logger zerolog.Logger, cfg *config.Config) error {
+	logger.Info().Msg("Attempting to connect to database for migration...")
 	hostport := net.JoinHostPort(cfg.Database.Host, strconv.Itoa(cfg.Database.Port))
 	// Url encod the password
 	encodedPassword := url.QueryEscape(cfg.Database.Password)

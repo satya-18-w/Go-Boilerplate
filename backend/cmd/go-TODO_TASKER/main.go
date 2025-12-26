@@ -35,7 +35,9 @@ func main() {
 	log := logger.NewLoggerWithService(cfg.Observability, loggerservice)
 
 	// Run database migrations
-	if err := database.Migrate(context.Background(), log, cfg); err != nil {
+	migrationCtx, migrationCancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer migrationCancel()
+	if err := database.Migrate(migrationCtx, log, cfg); err != nil {
 		log.Fatal().Err(err).Msg("Failed to database Migrate")
 	}
 
