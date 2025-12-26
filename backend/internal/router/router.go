@@ -57,5 +57,13 @@ func NewRouter(s *server.Server, h *handler.Handlers, services *service.Services
 	v1Router := router.Group("/api/v1")
 	v1.RegisterV1Routes(v1Router, h, middlewares)
 
+	// Serve Static Files (Frontend)
+	router.Use(echoMiddleware.StaticWithConfig(echoMiddleware.StaticConfig{
+		Root:   "public",
+		Index:  "index.html",
+		Browse: false,
+		HTML5:  true,
+	}))
+
 	return router
 }

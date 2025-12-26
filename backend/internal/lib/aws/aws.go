@@ -3,7 +3,7 @@ package aws
 import (
 	"context"
 
-	// "github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/satya-18-w/go-TODO_TASKER/internal/server"
@@ -26,18 +26,17 @@ func NewAWS(server *server.Server) (*AWS, error) {
 	}
 
 	// Add custom endpoint if provided (for S3-compatible services like Sevalla/R2)
-	// if awsConfig.EndpointURL != "" {
-	// 	configOptions = append(configOptions, config.WithEndpointResolverWithOptions(
-	// 		aws.EndpointResolverWithOptionsFunc(func(service, region string,
-	// 			options ...interface{},
-	// 		) (aws.Endpoint, error) {
-	// 			return aws.Endpoint{
-	// 				URL:           awsConfig.EndpointURL,
-	// 				SigningRegion: awsConfig.Region,
-	// 			}, nil
-	// 		}),
-	// 	))
-	// }
+	if awsConfig.EndpointURL != "" {
+		configOptions = append(configOptions, config.WithEndpointResolverWithOptions(
+			aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
+				return aws.Endpoint{
+					URL:               awsConfig.EndpointURL,
+					SigningRegion:     awsConfig.Region,
+					HostnameImmutable: true,
+				}, nil
+			}),
+		))
+	}
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), configOptions...)
 	if err != nil {

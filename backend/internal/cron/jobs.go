@@ -21,8 +21,8 @@ func (j *DueDateReminderJob) Description() string {
 func (j *DueDateReminderJob) Run(ctx context.Context, jobCtx *JobContext) error {
 	todos, err := jobCtx.Repositories.Todo.GetTodosDueInHours(
 		ctx,
-		jobCtx.Config.CRON.ReminderHours,
-		jobCtx.Config.CRON.BatchSize,
+		jobCtx.Config.Cron.ReminderHours,
+		jobCtx.Config.Cron.BatchSize,
 	)
 
 	if err != nil {
@@ -30,7 +30,7 @@ func (j *DueDateReminderJob) Run(ctx context.Context, jobCtx *JobContext) error 
 	}
 	jobCtx.Server.Logger.Info().
 		Int("todo_count", len(todos)).
-		Int("hours", jobCtx.Config.CRON.ReminderHours).
+		Int("hours", jobCtx.Config.Cron.ReminderHours).
 		Msg("Found todos due soon")
 
 	userTodos := make(map[string][]string)

@@ -36,7 +36,7 @@ func (c *CommentRepository) AddComment(ctx context.Context, userID string, todoI
 	rows, err := c.server.DB.Pool.Query(ctx, stmt, pgx.NamedArgs{
 		"todo_id": todoID,
 		"user_id": userID,
-		"content": payload.Comment,
+		"content": payload.Content,
 	})
 
 	if err != nil {

@@ -14,5 +14,9 @@ func RegisterV1Routes(router *echo.Group, handlers *handler.Handlers, auth *midd
 	registerCategoryRouter(router, handlers.Category, auth.Auth)
 
 	// Register Category Routes
+	// Register Category Routes
 	registerCategoryRouter(router, handlers.Category, auth.Auth)
+
+	// Register Webhook Routes
+	registerWebhookRouter(router, handlers.Webhook)
 }

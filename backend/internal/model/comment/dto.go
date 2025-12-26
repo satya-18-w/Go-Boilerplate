@@ -6,8 +6,8 @@ import (
 )
 
 type AddCommentPayload struct {
-	TodoID  uuid.UUID `json:"id" validate:required,uuid"`
-	Comment string    `json:"comment" validate:"required,min=1,max=1000"`
+	TodoID  uuid.UUID `param:"id" validate:"required,uuid"`
+	Content string    `json:"content" validate:"required,min=1,max=1000"`
 }
 
 func (a *AddCommentPayload) Validate() error {

@@ -22,7 +22,7 @@ type Config struct {
 	Observability *ObservabilityConfig `koanf:"observability"`
 	Integration   IntegrationConfig    `koanf:"integration" validate:"required"`
 	AWS           AWSConfig            `koanf:"aws" validate:"required"`
-	CRON          *CronConfig          `koanf:"cron"`
+	Cron          *CronConfig          `koanf:"cron"`
 }
 type AWSConfig struct {
 	Region          string `koanf:"region" validate:"required"`
@@ -87,39 +87,178 @@ func DefaultCronConfig() *CronConfig {
 	}
 }
 
+// func LoadConfig() (*Config, error) {
+// 	logger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
+// 	k := koanf.New(".")
+// 	err := k.Load(env.Provider("TODO_TASKER_", ".", func(s string) string {
+// 		return strings.ToLower(strings.TrimPrefix(s, "TODO_TASKER_"))
+// 	}), nil)
+// 	if err != nil {
+// 		logger.Fatal().Err(err).Msg("Could not load initial env variables")
+// 	}
+// 	mainconfig := &Config{}
+// 	err = k.Unmarshal("", mainconfig)
+// 	if err != nil {
+// 		logger.Fatal().Err(err).Msg("Could not unmarshal main config")
+// 	}
+// 	validate := validator.New()
+// 	err = validate.Struct(mainconfig)
+// 	if err != nil {
+// 		logger.Fatal().Err(err).Msg("Config validation Failed")
+// 	}
+
+// 	if mainconfig.Observability == nil {
+// 		mainconfig.Observability = DefaultObservabilityConfig()
+// 	}
+// 	mainconfig.Observability.ServiceName = "TODO_TASKER"
+// 	mainconfig.Observability.Environment = mainconfig.Primary.Env
+
+// 	if err := mainconfig.Observability.Validate(); err != nil {
+// 		logger.Fatal().Err(err).Msg("Observability config validation failed")
+// 	}
+
+// 	if mainconfig.CRON == nil {
+// 		mainconfig.CRON = DefaultCronConfig()
+// 	}
+// 	return mainconfig, nil
+
+// }
+
+// Because sevalla returns a stringified object so we need to parse it
+func parseMapString(value string) (map[string]string, bool) {
+	if !strings.HasPrefix(value, "map[") || !strings.HasSuffix(value, "]") {
+		return nil, false
+	}
+
+	content := strings.TrimPrefix(value, "map[")
+	content = strings.TrimSuffix(content, "]")
+
+	if content == "" {
+		return make(map[string]string), true
+	}
+
+	result := make(map[string]string)
+
+	i := 0
+	for i < len(content) {
+		keyStart := i
+		for i < len(content) && content[i] != ':' {
+			i++
+		}
+		if i >= len(content) {
+			break
+		}
+
+		key := strings.TrimSpace(content[keyStart:i])
+		i++
+
+		valueStart := i
+		if i+4 <= len(content) && content[i:i+4] == "map[" {
+			bracketCount := 0
+			for i < len(content) {
+				if i+4 <= len(content) && content[i:i+4] == "map[" {
+					bracketCount++
+					i += 4
+				} else if content[i] == ']' {
+					bracketCount--
+					i++
+					if bracketCount == 0 {
+						break
+					}
+				} else {
+					i++
+				}
+			}
+		} else {
+			for i < len(content) && content[i] != ' ' {
+				i++
+			}
+		}
+
+		value := strings.TrimSpace(content[valueStart:i])
+
+		if nestedMap, isNested := parseMapString(value); isNested {
+			for nestedKey, nestedValue := range nestedMap {
+				result[key+"."+nestedKey] = nestedValue
+			}
+		} else {
+			result[key] = value
+		}
+
+		for i < len(content) && content[i] == ' ' {
+			i++
+		}
+	}
+
+	return result, true
+}
+
 func LoadConfig() (*Config, error) {
 	logger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
+
 	k := koanf.New(".")
-	err := k.Load(env.Provider("TODO_TASKER_", ".", func(s string) string {
-		return strings.ToLower(strings.TrimPrefix(s, "TODO_TASKER_"))
+
+	envVars := make(map[string]string)
+	for _, env := range os.Environ() {
+		parts := strings.SplitN(env, "=", 2)
+		if len(parts) == 2 && strings.HasPrefix(parts[0], "TASKER_") {
+			key := parts[0]
+			value := parts[1]
+
+			configKey := strings.ToLower(strings.TrimPrefix(key, "TASKER_"))
+
+			if mapData, isMap := parseMapString(value); isMap {
+				for mapKey, mapValue := range mapData {
+					flatKey := configKey + "." + strings.ToLower(mapKey)
+					envVars[flatKey] = mapValue
+				}
+			} else {
+				envVars[configKey] = value
+			}
+		}
+	}
+
+	err := k.Load(env.ProviderWithValue("TASKER_", ".", func(key, value string) (string, any) {
+		return strings.ToLower(strings.TrimPrefix(key, "TASKER_")), value
 	}), nil)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Could not load initial env variables")
+		logger.Fatal().Err(err).Msg("could not load initial env variables")
 	}
-	mainconfig := &Config{}
-	err = k.Unmarshal("", mainconfig)
+
+	for key, value := range envVars {
+		k.Set(key, value)
+	}
+
+	mainConfig := &Config{}
+
+	err = k.Unmarshal("", mainConfig)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Could not unmarshal main config")
+		logger.Fatal().Err(err).Msg("could not unmarshal main config")
 	}
+
 	validate := validator.New()
-	err = validate.Struct(mainconfig)
+
+	err = validate.Struct(mainConfig)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Config validation Failed")
+		logger.Fatal().Err(err).Msg("config validation failed")
+	} else {
+		logger.Info().Msg("config validation passed")
 	}
 
-	if mainconfig.Observability == nil {
-		mainconfig.Observability = DefaultObservabilityConfig()
-	}
-	mainconfig.Observability.ServiceName = "TODO_TASKER"
-	mainconfig.Observability.Environment = mainconfig.Primary.Env
-
-	if err := mainconfig.Observability.Validate(); err != nil {
-		logger.Fatal().Err(err).Msg("Observability config validation failed")
+	if mainConfig.Observability == nil {
+		mainConfig.Observability = DefaultObservabilityConfig()
 	}
 
-	if mainconfig.CRON == nil {
-		mainconfig.CRON = DefaultCronConfig()
-	}
-	return mainconfig, nil
+	mainConfig.Observability.ServiceName = "tasker"
+	mainConfig.Observability.Environment = mainConfig.Primary.Env
 
+	if err := mainConfig.Observability.Validate(); err != nil {
+		logger.Fatal().Err(err).Msg("invalid observability config")
+	}
+
+	if mainConfig.Cron == nil {
+		mainConfig.Cron = DefaultCronConfig()
+	}
+
+	return mainConfig, nil
 }
