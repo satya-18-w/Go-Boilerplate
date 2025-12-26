@@ -2,7 +2,7 @@
 # This config works when Sevalla's root directory is set to "backend"
 
 [phases.setup]
-nixPkgs = ["go_1_25"]
+nixPkgs = ["go_1_23"]
 
 [phases.install]
 cmds = [
