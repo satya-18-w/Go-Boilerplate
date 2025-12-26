@@ -30,7 +30,7 @@ export function TodosPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
   const [showOverdue, setShowOverdue] = useState(false);
   const [showCompleted, setShowCompleted] = useState<boolean | undefined>();
-  const [sortBy, setSortBy] = useState<string>("created_at");
+  const [sortBy, setSortBy] = useState<"created_at" | "due_date" | "priority" | "title">("created_at");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const debouncedSearch = useDebounce(searchQuery, 300);
@@ -162,7 +162,7 @@ export function TodosPage() {
             <Select
               value={sortBy}
               onValueChange={(value) => {
-                setSortBy(value);
+                setSortBy(value as "created_at" | "due_date" | "priority" | "title");
                 handleFilterChange();
               }}
             >

@@ -1,59 +1,26 @@
+# Nixpacks configuration for Frontend
+# This is the root nixpacks.toml - used when Sevalla root is "." (for frontend)
+
 [phases.setup]
-nixPkgs = ["go_1_25", "nodejs_22", "bun"]
-aptPkgs = ["git"]
+nixPkgs = ["nodejs_22", "bun"]
 
 [phases.install]
 cmds = [
-
-  "bun install --frozen-lockfile",
-  "bun run build --filter=@tasker/openapi --filter=@tasker/zod",
-  "cd backend && go mod download"
+  "bun install --frozen-lockfile"
 ]
 
 [phases.build]
-
 cmds = [
-  # Build shared packages first (zod, openapi)
+  # Build shared packages first (in correct order - zod before openapi)
   "bun run build --filter=@tasker/zod",
   "bun run build --filter=@tasker/openapi",
-  "bun run build --filter=@tasker/emails",
-  # Build frontend
-  "cd frontend && bun run build",
-  # Build Go backend
-  "cd backend && go build -o ../bin/server ./cmd/go-TODO_TASKER"
+  # Build the frontend application
+  "cd apps/frontend && bun run build"
 ]
 
+# Serve static files using a simple static server
 [start]
-cmd = "./bin/server"
+cmd = "bunx serve -s apps/frontend/dist -l 3000"
 
-# Alternative: Backend-only deployment
-# Uncomment below and comment above sections if deploying backend separately
-# [phases.setup]
-# nixPkgs = ["go_1_25"]
-# 
-# [phases.install]
-# cmds = ["cd backend && go mod download"]
-# 
-# [phases.build]
-# cmds = ["cd backend && go build -o server ./cmd/go-TODO_TASKER"]
-# 
-# [start]
-# cmd = "cd backend && ./server"
-
-# Alternative: Frontend-only deployment
-# Uncomment below for frontend-only deployment (serves static files)
-# [phases.setup]
-# nixPkgs = ["nodejs_22", "bun"]
-# 
-# [phases.install]
-# cmds = ["bun install --frozen-lockfile"]
-# 
-# [phases.build]
-# cmds = [
-#   "bun run build --filter=@tasker/zod",
-#   "bun run build --filter=@tasker/openapi", 
-#   "cd frontend && bun run build"
-# ]
-# 
-# [start]
-# cmd = "cd frontend && bun run start"
+[variables]
+NODE_ENV = "production"

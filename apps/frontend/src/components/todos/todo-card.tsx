@@ -1,4 +1,5 @@
 import { TodoCommentsDialog } from "./todo-comments-dialog";
+import { TodoAttachmentsDialog } from "./todo-attachments-dialog";
 import { TodoEditForm } from "./todo-edit-form";
 import {
   useUpdateTodo,
@@ -123,7 +124,7 @@ export function TodoCard({ todo, compact = false }: TodoCardProps) {
           "transition-all hover:shadow-md",
           todo.status === "completed" && "opacity-75",
           compact &&
-            "shadow-none border-0 border-l-2 border-l-transparent hover:border-l-primary",
+          "shadow-none border-0 border-l-2 border-l-transparent hover:border-l-primary",
         )}
       >
         <CardContent className={cn("p-4", compact && "p-3")}>
@@ -147,7 +148,7 @@ export function TodoCard({ todo, compact = false }: TodoCardProps) {
                         "font-semibold truncate",
                         compact ? "text-sm" : "text-base",
                         todo.status === "completed" &&
-                          "line-through text-muted-foreground",
+                        "line-through text-muted-foreground",
                       )}
                     >
                       {todo.title}
@@ -185,6 +186,13 @@ export function TodoCard({ todo, compact = false }: TodoCardProps) {
                       Comments ({todo.comments?.length || 0})
                     </DropdownMenuItem>
                   </TodoCommentsDialog>
+
+                  <TodoAttachmentsDialog todoId={todo.id}>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      <Paperclip className="h-4 w-4 mr-2" />
+                      Attachments ({todo.attachments?.length || 0})
+                    </DropdownMenuItem>
+                  </TodoAttachmentsDialog>
 
                   <DropdownMenuSeparator />
 
