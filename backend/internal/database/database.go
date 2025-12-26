@@ -108,7 +108,8 @@ func New(cfg *config.Config, logger *zerolog.Logger, loggerservice *loggerConfig
 	ctx, cancel := context.WithTimeout(context.Background(), DatabasePingTimeout*time.Second)
 	defer cancel()
 	if err = pool.Ping(ctx); err != nil {
-		return nil, fmt.Errorf("failed to ping database: %w", err)
+		logger.Error().Err(err).Msg("failed to ping database, continuing without verified connection")
+		// return nil, fmt.Errorf("failed to ping database: %w", err)
 	}
 	logger.Info().Msg(("Connected to the Database Successfully"))
 	return database, nil

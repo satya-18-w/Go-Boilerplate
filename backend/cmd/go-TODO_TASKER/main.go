@@ -41,7 +41,7 @@ func main() {
 	migrationCtx, migrationCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer migrationCancel()
 	if err := database.Migrate(migrationCtx, log, cfg); err != nil {
-		log.Fatal().Err(err).Msg("Failed to database Migrate")
+		log.Error().Err(err).Msg("Failed to database Migrate - Continuing startup")
 	}
 
 	// Initialize server
