@@ -1,5 +1,5 @@
-# Nixpacks configuration for Backend (Go 1.25)
-# Builds the Go API server and cron worker
+# Nixpacks configuration for Backend (Go 1.25) - Standalone
+# This config works when Sevalla's root directory is set to "backend"
 
 [phases.setup]
 nixPkgs = ["go_1_25"]
@@ -11,7 +11,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-  # Build main API server
+  # Build main API server with optimizations
   "go build -ldflags='-s -w' -o bin/tasker ./cmd/go-TODO_TASKER",
   # Build cron worker
   "go build -ldflags='-s -w' -o bin/cron ./cmd/cron"
