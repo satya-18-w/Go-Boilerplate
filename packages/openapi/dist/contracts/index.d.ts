@@ -153,7 +153,7 @@ export declare const apiContract: {
             method: "GET";
             path: "/v1/todos";
             responses: {
-                200: import("zod").ZodSchema<import("@TODO_TASKER/zod").PaginatedResponse<{
+                200: import("zod").ZodSchema<import("@tasker/zod").PaginatedResponse<{
                     status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
@@ -222,7 +222,7 @@ export declare const apiContract: {
                         fileSize: number | null;
                         mimeType: string | null;
                     }[];
-                }>, import("zod").ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+                }>, import("zod").ZodTypeDef, import("@tasker/zod").PaginatedResponse<{
                     status: "draft" | "active" | "completed" | "archived";
                     id: string;
                     userId: string;
@@ -1241,7 +1241,7 @@ export declare const apiContract: {
             method: "GET";
             path: "/v1/categories";
             responses: {
-                200: import("zod").ZodSchema<import("@TODO_TASKER/zod").PaginatedResponse<{
+                200: import("zod").ZodSchema<import("@tasker/zod").PaginatedResponse<{
                     id: string;
                     userId: string;
                     name: string;
@@ -1249,7 +1249,7 @@ export declare const apiContract: {
                     description: string | null;
                     createdAt: string;
                     updatedAt: string;
-                }>, import("zod").ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+                }>, import("zod").ZodTypeDef, import("@tasker/zod").PaginatedResponse<{
                     id: string;
                     userId: string;
                     name: string;

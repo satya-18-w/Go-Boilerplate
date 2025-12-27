@@ -56,7 +56,7 @@ export declare const todoContract: {
         method: "GET";
         path: "/v1/todos";
         responses: {
-            200: z.ZodType<import("@TODO_TASKER/zod").PaginatedResponse<{
+            200: z.ZodType<import("@tasker/zod").PaginatedResponse<{
                 status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;
@@ -125,7 +125,7 @@ export declare const todoContract: {
                     fileSize: number | null;
                     mimeType: string | null;
                 }[];
-            }>, z.ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+            }>, z.ZodTypeDef, import("@tasker/zod").PaginatedResponse<{
                 status: "draft" | "active" | "completed" | "archived";
                 id: string;
                 userId: string;

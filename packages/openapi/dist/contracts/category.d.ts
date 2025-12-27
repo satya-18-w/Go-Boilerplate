@@ -32,7 +32,7 @@ export declare const categoryContract: {
         method: "GET";
         path: "/v1/categories";
         responses: {
-            200: z.ZodType<import("@TODO_TASKER/zod").PaginatedResponse<{
+            200: z.ZodType<import("@tasker/zod").PaginatedResponse<{
                 id: string;
                 userId: string;
                 name: string;
@@ -40,7 +40,7 @@ export declare const categoryContract: {
                 description: string | null;
                 createdAt: string;
                 updatedAt: string;
-            }>, z.ZodTypeDef, import("@TODO_TASKER/zod").PaginatedResponse<{
+            }>, z.ZodTypeDef, import("@tasker/zod").PaginatedResponse<{
                 id: string;
                 userId: string;
                 name: string;
