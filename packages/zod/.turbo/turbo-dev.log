@@ -1,5 +1,6 @@
 [?9001h[?1004h[?25l[2J[m[35m[2m[H$[m[1m[2m[1Ctsc && (concurrently "tsc -w" "tsc-alias -w")
-]0;C:\Users\Satyajit Samal\Downloads\bun-windows-x64\bun-windows-x64\bun.exe[?25h[22m[0] [2J[3J[?25l[H[K
+]0;C:\Users\Satyajit Samal\Downloads\bun-windows-x64\bun-windows-x64\bun.exe[?25h[22m[0] [2J[3J[?25l[H8:31:23 pm - Starting compilation in watch mode...[K
+[0][K
 [K
 [K
 [K
@@ -9,82 +10,7 @@
 [K
 [K
 [K
-[K[H[?25h10:42:56 pm - Starting compilation in watch mode...
+[K
+[K[3;1H[?25h[1] tsc-alias info: [Watching for file changes...]
 [0] 
-[1] tsc-alias info: [Watching for file changes...]
-[0] 
-[0] 10:42:57 pm - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H12:36:26 am - File change detected. Starting incremental compilation...[K
-[0][K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[3;1H[?25h[0] 
-[0] 12:36:26 am - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H12:36:49 am - File change detected. Starting incremental compilation...[K
-[0][K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[3;1H[?25h[0] 
-[0] 12:36:50 am - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H1:39:03 am - File change detected. Starting incremental compilation...[K
-[0][K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[3;1H[?25h[0] 
-[0] 1:39:04 am - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H1:39:16 am - File change detected. Starting incremental compilation...[K
-[0][K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[3;1H[?25h[0] 
-[0] 1:39:16 am - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H1:44:54 am - File change detected. Starting incremental compilation...[K
-[0][K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[3;1H[?25h[0] 
-[0] 1:44:54 am - Found 0 errors. Watching for file changes.
-[0] [2J[3J[?25l[H[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K
-[K[H[?25h2:34:37 am - File change detected. Starting incremental compilation...
-[0] 
-[0] 
-[0] 2:34:38 am - Found 0 errors. Watching for file changes.
+[0] 8:31:24 pm - Found 0 errors. Watching for file changes.

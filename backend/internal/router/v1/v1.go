@@ -11,7 +11,7 @@ func RegisterV1Routes(router *echo.Group, handlers *handler.Handlers, auth *midd
 	registerTodoRouter(router, handlers.Todo, handlers.Comment, auth.Auth)
 
 	// Register Comment Routes
-	registerCategoryRouter(router, handlers.Category, auth.Auth)
+	registerCommentRouter(router, handlers.Comment, auth.Auth)
 
 	// Register Category Routes
 	// Register Category Routes

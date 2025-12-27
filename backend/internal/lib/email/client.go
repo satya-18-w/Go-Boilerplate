@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 	"github.com/resend/resend-go/v2"
@@ -27,11 +28,13 @@ func NewClient(cfg *config.Config, logger *zerolog.Logger) *Client {
 }
 
 func (c *Client) SendEmail(to, subject string, templateName Template, data map[string]any) error {
-	templPath := fmt.Sprintf("%s%s.html", "templates/emails/", templateName)
+	templPath := filepath.Join("templates", "emails", string(templateName)+".html")
+	// Ensure slash consistency on windows if needed or just rely on Join
+	// templPath is relative to CWD.
 
 	templ, err := template.ParseFiles(templPath)
 	if err != nil {
-		return errors.Wrapf(err, "Fialed to parse email template %s", templateName)
+		return errors.Wrapf(err, "Failed to parse email template %s", templateName)
 	}
 
 	var body bytes.Buffer
